@@ -1,0 +1,25 @@
+# SQLite version 2.x
+#   gem install sqlite-ruby
+development:
+  database: atc_development
+  adapter: mysql
+  host: 127.0.0.1
+  username: atcdev
+  password: atcdev
+
+# Warning: The database defined as 'test' will be erased and
+# re-generated from your development database when you run 'rake'.
+# Do not set this db to the same as development or production.
+test:
+  database: atc_test
+  adapter: mysql
+  host: 127.0.0.1
+  username: atctest
+  password: atctest
+
+production:
+  database: atc_production
+  adapter: mysql
+  host: 127.0.0.1
+  username: atcprod
+  password: atcprod
