@@ -1,6 +1,6 @@
 class UpdateWhiteList < ActiveRecord::Migration
   def self.up
-    [Post, Forum, User].each do |klass|
+    [Post, Category, User].each do |klass|
       klass.transaction do
         klass.find(:all).each do |record|
           begin
@@ -20,11 +20,11 @@ class UpdateWhiteList < ActiveRecord::Migration
     def self.message_for_record(record, message)
       case record
         when Post
-          "Post ##{record.id} of /forums/#{record.forum_id}/topics/#{record.topic_id}"
+          "Post ##{record.id} of /categories/#{record.category_id}/topics/#{record.topic_id}"
         when User
           "User #{record.display_name} /users/##{record.id}"
-        when Forum
-          "Forum /forums/##{record.id}"
+        when Category
+          "Category /categories/##{record.id}"
       end << " errored with: '#{message}'"
     end
 end

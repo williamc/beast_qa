@@ -53,7 +53,7 @@ module AuthenticationSystem
         session[:user_id] = @current_user.id 
         # this is used while we're logged in to know which threads are new, etc
         session[:last_active] = @current_user.last_seen_at
-        session[:topics] = session[:forums] = {}
+        session[:topics] = session[:categories] = {}
         update_last_seen_at
       end
     end

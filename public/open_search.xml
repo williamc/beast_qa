@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
- <ShortName>Beast Forum Search</ShortName>
+ <ShortName>Beast Category Search</ShortName>
  <Tags>beast</Tags>
  <Contact>admin@example.com</Contact>
  <Url type="application/rss+xml" template="http://beast.caboo.se/posts?q={searchTerms}&amp;page={startPage}&amp;format=rss" />

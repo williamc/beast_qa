@@ -1,29 +1,29 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'forums_controller'
+require 'categories_controller'
 
 # Re-raise errors caught by the controller.
-class ForumsController; def rescue_action(e) raise e end; end
+class CategoriesController; def rescue_action(e) raise e end; end
 
-class ForumsControllerTest < Test::Unit::TestCase
+class CategoriesControllerTest < Test::Unit::TestCase
   all_fixtures
 
   def setup
-    @controller = ForumsController.new
+    @controller = CategoriesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
 
   # test remembering pages
   
-  def test_forum_index_resets_page_variable
-    @request.session[:forum_page]=Hash.new(1)
+  def test_category_index_resets_page_variable
+    @request.session[:category_page]=Hash.new(1)
     get :index, :id => 1
-    assert_equal nil, session[:forum_page]
+    assert_equal nil, session[:category_page]
   end
   
-  def test_forum_view_sets_page_variable
+  def test_category_view_sets_page_variable
     get :show, :id =>1, :page =>3 
-    assert_equal 3, session[:forum_page][1]
+    assert_equal 3, session[:category_page][1]
   end
 
 
@@ -46,7 +46,7 @@ class ForumsControllerTest < Test::Unit::TestCase
   def test_should_get_index
     get :index
     assert_response :success
-    assert assigns(:forums)
+    assert assigns(:categories)
     assert_select 'html>head'
   end
 
@@ -54,7 +54,7 @@ class ForumsControllerTest < Test::Unit::TestCase
     content_type 'application/xml'
     get :index, :format => 'xml'
     assert_response :success
-    assert_select 'forums>forum'
+    assert_select 'categories>category'
   end
 
   def test_should_get_new
@@ -69,28 +69,28 @@ class ForumsControllerTest < Test::Unit::TestCase
     assert_redirected_to login_path
   end
   
-  def test_should_create_forum
+  def test_should_create_category
     login_as :aaron
-    assert_difference Forum, :count do
-      post :create, :forum => { :name => 'yeah' }
+    assert_difference Category, :count do
+      post :create, :category => { :name => 'yeah' }
     end
     
-    assert_redirected_to forum_path(assigns(:forum))
+    assert_redirected_to category_path(assigns(:category))
   end
   
-  def test_should_create_forum_with_xml
+  def test_should_create_category_with_xml
     content_type 'application/xml'
     authorize_as :aaron
 
-    assert_difference Forum, :count do
-      post :create, :forum => { :name => 'yeah' }, :format => 'xml'
+    assert_difference Category, :count do
+      post :create, :category => { :name => 'yeah' }, :format => 'xml'
     end
     
     assert_response :created
-    assert_equal formatted_forum_url(:id => assigns(:forum), :format => :xml), @response.headers["Location"]
+    assert_equal formatted_category_url(:id => assigns(:category), :format => :xml), @response.headers["Location"]
   end
 
-  def test_should_show_forum
+  def test_should_show_category
     get :show, :id => 1
     assert_response :success
     assert assigns(:topics)
@@ -99,11 +99,11 @@ class ForumsControllerTest < Test::Unit::TestCase
     assert_select 'html>head'
   end
   
-  def test_should_show_forum_with_xml
+  def test_should_show_category_with_xml
     content_type 'application/xml'
     get :show, :id => 1, :format => 'xml'
     assert_response :success
-    assert_select 'forum'
+    assert_select 'category'
   end
 
   def test_should_get_edit
@@ -112,34 +112,34 @@ class ForumsControllerTest < Test::Unit::TestCase
     assert_response :success
   end
   
-  def test_should_update_forum
+  def test_should_update_category
     login_as :aaron
-    put :update, :id => 1, :forum => { }
-    assert_redirected_to forum_path(1)
+    put :update, :id => 1, :category => { }
+    assert_redirected_to category_path(1)
   end
 
-  def test_should_update_forum_with_xml
+  def test_should_update_category_with_xml
     authorize_as :aaron
     content_type 'application/xml'
-    put :update, :id => 1, :forum => { }, :format => 'xml'
+    put :update, :id => 1, :category => { }, :format => 'xml'
     assert_response :success
   end
 
-  def test_should_destroy_forum
+  def test_should_destroy_category
     login_as :aaron
-    old_count = Forum.count
+    old_count = Category.count
     delete :destroy, :id => 1
-    assert_equal old_count-1, Forum.count
+    assert_equal old_count-1, Category.count
     
-    assert_redirected_to forums_path
+    assert_redirected_to categories_path
   end
 
-  def test_should_destroy_forum_with_xml
+  def test_should_destroy_category_with_xml
     authorize_as :aaron
     content_type 'application/xml'
-    old_count = Forum.count
+    old_count = Category.count
     delete :destroy, :id => 1, :format => 'xml'
-    assert_equal old_count-1, Forum.count
+    assert_equal old_count-1, Category.count
     assert_response :success
   end
 end

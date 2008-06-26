@@ -1,8 +1,8 @@
-== Beast -  Two's company. Three's a forum. More's a Beast.
+== Beast -  Two's company. Three's a category. More's a Beast.
 
-A small, light-weight forum in Rails with a scary name and a goal of around 500 lines of code when we're done. [1]
+A small, light-weight category in Rails with a scary name and a goal of around 500 lines of code when we're done. [1]
 
-[1] The 500 LOC limit has officially been put to rest (http://beast.caboo.se/forums/1/topics/681), however the goal is unchanged: clean, readable code, and a great minimal forum app.  Less is more.
+[1] The 500 LOC limit has officially been put to rest (http://beast.caboo.se/categories/1/topics/681), however the goal is unchanged: clean, readable code, and a great minimal category app.  Less is more.
 
 
 == How to Obtain Beast
@@ -51,5 +51,5 @@ Installing on Windows Guide
 
 http://www.olddognewtricks.co.uk/2006/09/beast...
 
-#beastforum on freenode
+#beastcategory on freenode
 

@@ -572,7 +572,7 @@ table tr td
 
 /* topics */
 
-#forum_description,
+#category_description,
 #topic_body
 {
   width:99%;
@@ -580,28 +580,28 @@ table tr td
 
 /* specific table styles */
 
-table.forums,
+table.categories,
 table.topics
  { font-size:0.8em; }
-table.forums tr th { font-size:0.8em; }
-table.forums tr td .title {
+table.categories tr th { font-size:0.8em; }
+table.categories tr td .title {
 	font-size:1.4em; 
 	}
 
-table.forums tr td .desc {
+table.categories tr td .desc {
 margin:0.5em 0;	
 }
-table.forums tr td
+table.categories tr td
 {
 	padding:4px 15px;
 }
-table.forums a.tiny
+table.categories a.tiny
 {
 	font-size:0.8em;
 	color:#666;
 }
 
-table.forums .posts
+table.categories .posts
 {
 	font-family: 'Lucida Grande', Tahoma, Arial, Helvetica, sans-serif;
 	color:#666;
@@ -638,9 +638,9 @@ table.topics tr td.c1
 
 table.topics tr td.c3 { border-left:0; }
 
-table.forums tr td.c1 {	border-right:0; padding-right:5px; padding-top:7px; }
-table.forums tr td.c2 {	border-width:1px 0; padding-left:5px; }
-table.forums tr td.c3 {	border-left:0; padding-left:5px; }
+table.categories tr td.c1 {	border-right:0; padding-right:5px; padding-top:7px; }
+table.categories tr td.c2 {	border-width:1px 0; padding-left:5px; }
+table.categories tr td.c3 {	border-left:0; padding-left:5px; }
 
 
 table.topics tr td.c2 small a,

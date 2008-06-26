@@ -1,5 +1,5 @@
 class TopicsController < ApplicationController
-  before_filter :find_forum_and_topic, :except => :index
+  before_filter :find_category_and_topic, :except => :index
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
 
   caches_formatted_page :rss, :show
@@ -7,9 +7,9 @@ class TopicsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.html { redirect_to forum_path(params[:forum_id]) }
+      format.html { redirect_to category_path(params[:category_id]) }
       format.xml do
-        @topics = Topic.paginate_by_forum_id(params[:forum_id], :order => 'sticky desc, replied_at desc', :page => params[:page])
+        @topics = Topic.paginate_by_category_id(params[:category_id], :order => 'sticky desc, replied_at desc', :page => params[:page])
         render :xml => @topics.to_xml
       end
     end
@@ -45,7 +45,7 @@ class TopicsController < ApplicationController
   def create
     # this is icky - move the topic/first post workings into the topic model?
     Topic.transaction do
-      @topic  = @forum.topics.build(params[:topic])
+      @topic  = @category.topics.build(params[:topic])
       assign_protected
       @post       = @topic.posts.build(params[:topic])
       @post.topic = @topic
@@ -56,8 +56,8 @@ class TopicsController < ApplicationController
       @post.save! 
     end
     respond_to do |format|
-      format.html { redirect_to topic_path(@forum, @topic) }
-      format.xml  { head :created, :location => formatted_topic_url(:forum_id => @forum, :id => @topic, :format => :xml) }
+      format.html { redirect_to topic_path(@category, @topic) }
+      format.xml  { head :created, :location => formatted_topic_url(:category_id => @category, :id => @topic, :format => :xml) }
     end
   end
   
@@ -66,7 +66,7 @@ class TopicsController < ApplicationController
     assign_protected
     @topic.save!
     respond_to do |format|
-      format.html { redirect_to topic_path(@forum, @topic) }
+      format.html { redirect_to topic_path(@category, @topic) }
       format.xml  { head 200 }
     end
   end
@@ -75,7 +75,7 @@ class TopicsController < ApplicationController
     @topic.destroy
     flash[:notice] = "Topic '{title}' was deleted."[:topic_deleted_message, @topic.title]
     respond_to do |format|
-      format.html { redirect_to forum_path(@forum) }
+      format.html { redirect_to category_path(@category) }
       format.xml  { head 200 }
     end
   end
@@ -84,16 +84,16 @@ class TopicsController < ApplicationController
     def assign_protected
       @topic.user     = current_user if @topic.new_record?
       # admins and moderators can sticky and lock topics
-      return unless admin? or current_user.moderator_of?(@topic.forum)
+      return unless admin? or current_user.moderator_of?(@topic.category)
       @topic.sticky, @topic.locked = params[:topic][:sticky], params[:topic][:locked] 
       # only admins can move
       return unless admin?
-      @topic.forum_id = params[:topic][:forum_id] if params[:topic][:forum_id]
+      @topic.category_id = params[:topic][:category_id] if params[:topic][:category_id]
     end
     
-    def find_forum_and_topic
-      @forum = Forum.find(params[:forum_id])
-      @topic = @forum.topics.find(params[:id]) if params[:id]
+    def find_category_and_topic
+      @category = Category.find(params[:category_id])
+      @topic = @category.topics.find(params[:id]) if params[:id]
     end
     
     def authorized?

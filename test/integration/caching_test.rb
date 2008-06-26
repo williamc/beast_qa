@@ -21,14 +21,14 @@ class CachingTest < ActionController::IntegrationTest
   #   end
   # end
   # 
-  # def test_should_cache_forum_posts_rss
-  #   assert_cached "forums/1/posts.rss" do
-  #     get formatted_forum_posts_path(1, :rss)
+  # def test_should_cache_category_posts_rss
+  #   assert_cached "categories/1/posts.rss" do
+  #     get formatted_category_posts_path(1, :rss)
   #   end
   # end
   # 
   # def test_should_cache_topic_posts_rss
-  #   assert_cached "forums/1/topics/1/posts.rss" do
+  #   assert_cached "categories/1/topics/1/posts.rss" do
   #     get formatted_posts_path(1, 1, :rss)
   #   end
   # end

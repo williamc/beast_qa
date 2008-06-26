@@ -1,7 +1,7 @@
 class CreatePosts < ActiveRecord::Migration
   def self.up
     create_table :posts do |t|
-      t.column :forum_id, :integer
+      t.column :category_id, :integer
       t.column :user_id, :integer
       t.column :post_id, :integer
       t.column :title, :string

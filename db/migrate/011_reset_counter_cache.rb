@@ -1,10 +1,10 @@
 class ResetCounterCache < ActiveRecord::Migration
   def self.up
     
-    Forum.find(:all).each do | forum |
-      forum.topics_count=forum.topics.count
-      forum.posts_count=forum.posts.count
-      forum.save
+    Category.find(:all).each do | category |
+      category.topics_count=category.topics.count
+      category.posts_count=category.posts.count
+      category.save
     end
     
     Post.find(:all).each do | i |

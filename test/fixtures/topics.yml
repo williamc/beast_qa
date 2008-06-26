@@ -1,7 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 pdi:
   id: 1
-  forum_id: 1
+  category_id: 1
   user_id: 1
   title: PDI this!
   created_at: <%= 4.days.ago.to_s :db %>
@@ -11,7 +11,7 @@ pdi:
   posts_count: 3
 sticky:
   id: 5
-  forum_id: 1
+  category_id: 1
   user_id: 2
   title: upgrade now
   created_at: <%= 123.hours.ago.to_s :db %>
@@ -23,7 +23,7 @@ sticky:
   sticky: 1
 ponies:
   id: 4
-  forum_id: 1
+  category_id: 1
   user_id: 2
   title: ponies
   created_at: <%= 47.hours.ago.to_s :db %>
@@ -33,7 +33,7 @@ ponies:
   last_post_id: 4 
 galactus:
   id: 6
-  forum_id: 2
+  category_id: 2
   user_id: 1
   title: Galactus is coming
   created_at: <%= 2.hours.ago.to_s :db %>
@@ -43,7 +43,7 @@ galactus:
   last_post_id: 6
 shield:
   id: 7
-  forum_id: 2
+  category_id: 2
   user_id: 2
   title: Agent of SHIELD
   created_at: <%= 1.hour.ago.to_s :db %>
@@ -53,7 +53,7 @@ shield:
   last_post_id: 9
 il8n:
   id: 8
-  forum_id: 1
+  category_id: 1
   user_id: 1
   title: il8n in rails?
   created_at: <%= 4.minutes.ago.to_s :db %>

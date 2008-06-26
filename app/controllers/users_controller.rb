@@ -99,7 +99,7 @@ class UsersController < ApplicationController
       format.html do
         @user.admin = params[:user][:admin] == '1'
         @user.save
-        @user.forums << Forum.find(params[:moderator]) unless params[:moderator].blank? || params[:moderator] == '-'
+        @user.categories << Category.find(params[:moderator]) unless params[:moderator].blank? || params[:moderator] == '-'
         redirect_to user_path(@user)
       end
     end

@@ -5,16 +5,16 @@
 <% form_for :user, :url => admin_user_path(@user), :html => {:class => "xdialog"} do |f| -%>
   <h6><%= 'Admin &amp; Moderation'[:admin_and_moderation] %></h6>
 
-  <% unless @user.forums.empty? -%>
+  <% unless @user.categories.empty? -%>
 
-	<p><%= 'This user can moderate the following forums.  Click one to remove.'[:remove_moderated_forum] %></p>
+	<p><%= 'This user can moderate the following categories.  Click one to remove.'[:remove_moderated_category] %></p>
 
   <ul class="flat">
-  <% @user.forums.find(:all, :select => "#{Forum.table_name}.*, #{Moderatorship.table_name}.id as moderatorship_id").each do |forum| -%>
+  <% @user.categories.find(:all, :select => "#{Category.table_name}.*, #{Moderatorship.table_name}.id as moderatorship_id").each do |category| -%>
     <li>
-      <%#= link_to forum.name, forum_path(forum), :class => "hidden" %>
-      <%#= link_to 'remove', moderator_path(@user, forum.moderatorship_id), :method => :delete %>
-      <%= link_to forum.name, user_moderator_path(@user, forum.moderatorship_id), :method => :delete, :confirm => "#{'Remove user as moderator for'[:remove_user_as_moderator]} #{forum.name}?" %>
+      <%#= link_to category.name, category_path(category), :class => "hidden" %>
+      <%#= link_to 'remove', moderator_path(@user, category.moderatorship_id), :method => :delete %>
+      <%= link_to category.name, user_moderator_path(@user, category.moderatorship_id), :method => :delete, :confirm => "#{'Remove user as moderator for'[:remove_user_as_moderator]} #{category.name}?" %>
     </li>
   <% end -%>
   </ul>
@@ -24,7 +24,7 @@
 	<label><%= 'Add as moderator'[] %></label><br />
 	<select name="moderator">
     <option value="-"></option>
-    <%= options_from_collection_for_select(Forum.find(:all, :order => 'position') - @user.forums, "id", "name") %>
+    <%= options_from_collection_for_select(Category.find(:all, :order => 'position') - @user.categories, "id", "name") %>
   </select></p>
 
   <p><label><%= f.check_box :admin %> <%= 'User is an administrator'[] %></label></p>

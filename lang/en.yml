@@ -1,16 +1,16 @@
 beast_title: "Beast"
 beast_sidebar_title: "What is Beast?"
-beast_sidebar_body: A small, light-weight forum in Rails with a scary name and a goal of around 500 lines of code when we're done.
+beast_sidebar_body: A small, light-weight category in Rails with a scary name and a goal of around 500 lines of code when we're done.
 beast_welcome: Welcome to Beast
 
-forum_title: Forum
-forums_title: Forums
-new_forum: New forum
-edit_forum: Edit forum
-save_forum: Save forum
-create_new_forum: Create new forum
+category_title: Category
+categories_title: Categories
+new_category: New category
+edit_category: Edit category
+save_category: Save category
+create_new_category: Create new category
 
-forum_is_unmoderated: This forum is currently unmoderated.
+category_is_unmoderated: This category is currently unmoderated.
 please_be_courteous: Please always be courteous.
 
 topic_title: Topic
@@ -40,7 +40,7 @@ recent_activity: Recent Activity
 no_recent_activity: No recent activity
 users_online: Users Online
 change_login: Please change your login
-gravatar_notice: To have your very own avatar displayed on this forum visit {gravatar} and sign up for a free gravatar.
+gravatar_notice: To have your very own avatar displayed on this category visit {gravatar} and sign up for a free gravatar.
 change_email_or_password: Change e-mail or password
 name_or_login: Name / Login
 reset_password: Reset Password
@@ -107,7 +107,7 @@ activation: Please visit the link below to activate your account.
 without_http: without http://
 admin_in_parens: '(admin)'
 admin_and_moderation: Admin &amp; Moderation
-remove_moderated_forum: This user can moderate the following forums.  Click one to remove.
+remove_moderated_category: This user can moderate the following categories.  Click one to remove.
 remove_user_as_moderator: Remove user as moderator for
 searching_for: Searching for
 locked: locked
@@ -131,7 +131,7 @@ formatting_list: "* or # <span>(lists)</span>"
 # additions by Raimonds Simanovskis on 2007-05-11
 or: or
 by_user: by {user}
-in_forum: in {forum}
+in_category: in {category}
 a_few_seconds_ago: "a few seconds ago"
 1_minute_ago: "1 minute ago"
 minutes_ago: "{minutes} minutes ago"
@@ -198,4 +198,4 @@ account_activation_message: "An account activation email has been sent to '{emai
 signup_complete_message: "Signup complete!"
 settings_saved_message: "Your settings have been saved."
 
-footer_message: "Two's company. Three's a forum. More's a Beast."
+footer_message: "Two's company. Three's a category. More's a Beast."

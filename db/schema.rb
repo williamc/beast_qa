@@ -11,6 +11,15 @@
 
 ActiveRecord::Schema.define(:version => 53) do
 
+  create_table "categories", :force => true do |t|
+    t.string  "name"
+    t.string  "description"
+    t.integer "topics_count",     :limit => 11, :default => 0
+    t.integer "posts_count",      :limit => 11, :default => 0
+    t.integer "position",         :limit => 11
+    t.text    "description_html"
+  end
+
   create_table "forums", :force => true do |t|
     t.string  "name"
     t.string  "description"
@@ -32,11 +41,11 @@ ActiveRecord::Schema.define(:version => 53) do
   end
 
   create_table "moderatorships", :force => true do |t|
-    t.integer "forum_id", :limit => 11
-    t.integer "user_id",  :limit => 11
+    t.integer "category_id", :limit => 11
+    t.integer "user_id",     :limit => 11
   end
 
-  add_index "moderatorships", ["forum_id"], :name => "index_moderatorships_on_forum_id"
+  add_index "moderatorships", ["category_id"], :name => "index_moderatorships_on_category_id"
 
   create_table "monitorships", :force => true do |t|
     t.integer "topic_id", :limit => 11
@@ -64,16 +73,16 @@ ActiveRecord::Schema.define(:version => 53) do
   end
 
   create_table "posts", :force => true do |t|
-    t.integer  "user_id",    :limit => 11
-    t.integer  "topic_id",   :limit => 11
+    t.integer  "user_id",     :limit => 11
+    t.integer  "topic_id",    :limit => 11
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "forum_id",   :limit => 11
+    t.integer  "category_id", :limit => 11
     t.text     "body_html"
   end
 
-  add_index "posts", ["forum_id", "created_at"], :name => "index_posts_on_forum_id"
+  add_index "posts", ["category_id", "created_at"], :name => "index_posts_on_category_id"
   add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id"
   add_index "posts", ["topic_id", "created_at"], :name => "index_posts_on_topic_id"
 
@@ -87,7 +96,7 @@ ActiveRecord::Schema.define(:version => 53) do
   add_index "sessions", ["session_id"], :name => "sessions_session_id_index"
 
   create_table "topics", :force => true do |t|
-    t.integer  "forum_id",     :limit => 11
+    t.integer  "category_id",  :limit => 11
     t.integer  "user_id",      :limit => 11
     t.string   "title"
     t.datetime "created_at"
@@ -101,9 +110,9 @@ ActiveRecord::Schema.define(:version => 53) do
     t.integer  "last_post_id", :limit => 11
   end
 
-  add_index "topics", ["forum_id"], :name => "index_topics_on_forum_id"
-  add_index "topics", ["forum_id", "sticky", "replied_at"], :name => "index_topics_on_sticky_and_replied_at"
-  add_index "topics", ["forum_id", "replied_at"], :name => "index_topics_on_forum_id_and_replied_at"
+  add_index "topics", ["category_id"], :name => "index_topics_on_category_id"
+  add_index "topics", ["category_id", "sticky", "replied_at"], :name => "index_topics_on_sticky_and_replied_at"
+  add_index "topics", ["category_id", "replied_at"], :name => "index_topics_on_category_id_and_replied_at"
 
   create_table "users", :force => true do |t|
     t.string   "login"

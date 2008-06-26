@@ -15,7 +15,7 @@ class Test::Unit::TestCase
   self.use_instantiated_fixtures  = false
   
   def self.all_fixtures
-    fixtures :forums, :users, :posts, :topics, :moderatorships, :monitorships
+    fixtures :categories, :users, :posts, :topics, :moderatorships, :monitorships
   end
 
   def assert_difference(object, method = nil, difference = 1)

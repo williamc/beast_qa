@@ -1,17 +1,17 @@
 ActionController::Routing::Routes.draw do |map|
-  map.home '', :controller => 'forums', :action => 'index'
+  map.home '', :controller => 'categories', :action => 'index'
 
   map.open_id_complete 'session', :controller => "sessions", :action => "create", :requirements => { :method => :get }
   map.resource :session
   
   map.resources :users, :member => { :admin => :post }, :has_many => [:moderators, :posts]
   
-  map.resources :forums, :has_many => [:posts] do |forum|
-    forum.resources :topics, :name_prefix => nil do |topic|
+  map.resources :categories, :has_many => [:posts] do |category|
+    category.resources :topics, :name_prefix => nil do |topic|
       topic.resources :posts, :name_prefix => nil
       topic.resource :monitorship, :name_prefix => nil
     end
-    forum.resources :posts, :name_prefix => 'forum_'
+    category.resources :posts, :name_prefix => 'category_'
   end
 
   map.resources :posts, :name_prefix => 'all_', :collection => { :search => :get }

@@ -27,16 +27,16 @@ module ApplicationHelper
   def search_posts_title
     returning(params[:q].blank? ? 'Recent Posts'[] : "Searching for"[] + " '#{h params[:q]}'") do |title|
       title << " "+'by {user}'[:by_user,h(User.find(params[:user_id]).display_name)] if params[:user_id]
-      title << " "+'in {forum}'[:in_forum,h(Forum.find(params[:forum_id]).name)] if params[:forum_id]
+      title << " "+'in {category}'[:in_category,h(Category.find(params[:category_id]).name)] if params[:category_id]
     end
   end
 
   def topic_title_link(topic, options)
     if topic.title =~ /^\[([^\]]{1,15})\]((\s+)\w+.*)/
       "<span class='flag'>#{$1}</span>" + 
-      link_to(h($2.strip), topic_path(@forum, topic), options)
+      link_to(h($2.strip), topic_path(@category, topic), options)
     else
-      link_to(h(topic.title), topic_path(@forum, topic), options)
+      link_to(h(topic.title), topic_path(@category, topic), options)
     end
   end
 
@@ -44,14 +44,14 @@ module ApplicationHelper
     options = params[:q].blank? ? {} : {:q => params[:q]}
     prefix = rss ? 'formatted_' : ''
     options[:format] = 'rss' if rss
-    [[:user, :user_id], [:forum, :forum_id]].each do |(route_key, param_key)|
+    [[:user, :user_id], [:category, :category_id]].each do |(route_key, param_key)|
       return send("#{prefix}#{route_key}_posts_path", options.update(param_key => params[param_key])) if params[param_key]
     end
     options[:q] ? search_all_posts_path(options) : send("#{prefix}all_posts_path", options)
   end
 
   # on windows and this isn't working like you expect?
-  # check: http://beast.caboo.se/forums/1/topics/657
+  # check: http://beast.caboo.se/categories/1/topics/657
   # strftime on windows doesn't seem to support %e and you'll need to 
   # use the less cool %d in the strftime line below
   def distance_of_time_in_words(from_time, to_time = 0, include_seconds = false)

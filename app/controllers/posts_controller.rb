@@ -1,14 +1,14 @@
 class PostsController < ApplicationController
   before_filter :find_post,      :except => [:index, :create, :monitored, :search]
   before_filter :login_required, :except => [:index, :monitored, :search, :show]
-  @@query_options = { :select => "#{Post.table_name}.*, #{Topic.table_name}.title as topic_title, #{Forum.table_name}.name as forum_name", :joins => "inner join #{Topic.table_name} on #{Post.table_name}.topic_id = #{Topic.table_name}.id inner join #{Forum.table_name} on #{Topic.table_name}.forum_id = #{Forum.table_name}.id" }
+  @@query_options = { :select => "#{Post.table_name}.*, #{Topic.table_name}.title as topic_title, #{Category.table_name}.name as category_name", :joins => "inner join #{Topic.table_name} on #{Post.table_name}.topic_id = #{Topic.table_name}.id inner join #{Category.table_name} on #{Topic.table_name}.category_id = #{Category.table_name}.id" }
 
   caches_formatted_page :rss, :index, :monitored
   cache_sweeper :posts_sweeper, :only => [:create, :update, :destroy]
 
   def index
     conditions = []
-    [:user_id, :forum_id, :topic_id].each { |attr| conditions << Post.send(:sanitize_sql, ["#{Post.table_name}.#{attr} = ?", params[attr]]) if params[attr] }
+    [:user_id, :category_id, :topic_id].each { |attr| conditions << Post.send(:sanitize_sql, ["#{Post.table_name}.#{attr} = ?", params[attr]]) if params[attr] }
     conditions = conditions.empty? ? nil : conditions.collect { |c| "(#{c})" }.join(' AND ')
     @posts = Post.paginate @@query_options.merge(:conditions => conditions, :page => params[:page], :count => {:select => "#{Post.table_name}.id"}, :order => post_order)
     @users = User.find(:all, :select => 'distinct *', :conditions => ['id in (?)', @posts.collect(&:user_id).uniq]).index_by(&:id)
@@ -35,18 +35,18 @@ class PostsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html { redirect_to topic_path(@post.forum_id, @post.topic_id) }
+      format.html { redirect_to topic_path(@post.category_id, @post.topic_id) }
       format.xml  { render :xml => @post.to_xml }
     end
   end
 
   def create
-    @topic = Topic.find_by_id_and_forum_id(params[:topic_id],params[:forum_id])
+    @topic = Topic.find_by_id_and_category_id(params[:topic_id],params[:category_id])
     if @topic.locked?
       respond_to do |format|
         format.html do
           flash[:notice] = 'This topic is locked.'[:locked_topic]
-          redirect_to(topic_path(:forum_id => params[:forum_id], :id => params[:topic_id]))
+          redirect_to(topic_path(:category_id => params[:category_id], :id => params[:topic_id]))
         end
         format.xml do
           render :text => 'This topic is locked.'[:locked_topic], :status => 400
@@ -54,21 +54,21 @@ class PostsController < ApplicationController
       end
       return
     end
-    @forum = @topic.forum
+    @category = @topic.category
     @post  = @topic.posts.build(params[:post])
     @post.user = current_user
     @post.save!
     respond_to do |format|
       format.html do
-        redirect_to topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :anchor => @post.dom_id, :page => params[:page] || '1')
+        redirect_to topic_path(:category_id => params[:category_id], :id => params[:topic_id], :anchor => @post.dom_id, :page => params[:page] || '1')
       end
-      format.xml { head :created, :location => formatted_post_url(:forum_id => params[:forum_id], :topic_id => params[:topic_id], :id => @post, :format => :xml) }
+      format.xml { head :created, :location => formatted_post_url(:category_id => params[:category_id], :topic_id => params[:topic_id], :id => @post, :format => :xml) }
     end
   rescue ActiveRecord::RecordInvalid
     flash[:bad_reply] = 'Please post something at least...'[:post_something_message]
     respond_to do |format|
       format.html do
-        redirect_to topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :anchor => 'reply-form', :page => params[:page] || '1')
+        redirect_to topic_path(:category_id => params[:category_id], :id => params[:topic_id], :anchor => 'reply-form', :page => params[:page] || '1')
       end
       format.xml { render :xml => @post.errors.to_xml, :status => 400 }
     end
@@ -89,7 +89,7 @@ class PostsController < ApplicationController
   ensure
     respond_to do |format|
       format.html do
-        redirect_to topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :anchor => @post.dom_id, :page => params[:page] || '1')
+        redirect_to topic_path(:category_id => params[:category_id], :id => params[:topic_id], :anchor => @post.dom_id, :page => params[:page] || '1')
       end
       format.js
       format.xml { head 200 }
@@ -102,8 +102,8 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html do
         redirect_to(@post.topic.frozen? ? 
-          forum_path(params[:forum_id]) :
-          topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :page => params[:page]))
+          category_path(params[:category_id]) :
+          topic_path(:category_id => params[:category_id], :id => params[:topic_id], :page => params[:page]))
       end
       format.xml { head 200 }
     end
@@ -115,11 +115,11 @@ class PostsController < ApplicationController
     end
     
     def post_order
-      "#{Post.table_name}.created_at#{params[:forum_id] && params[:topic_id] ? nil : " desc"}"
+      "#{Post.table_name}.created_at#{params[:category_id] && params[:topic_id] ? nil : " desc"}"
     end
     
     def find_post
-      @post = Post.find_by_id_and_topic_id_and_forum_id(params[:id], params[:topic_id], params[:forum_id]) || raise(ActiveRecord::RecordNotFound)
+      @post = Post.find_by_id_and_topic_id_and_category_id(params[:id], params[:topic_id], params[:category_id]) || raise(ActiveRecord::RecordNotFound)
     end
     
     def render_posts_or_xml(template_name = action_name)

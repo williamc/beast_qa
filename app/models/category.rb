@@ -1,4 +1,4 @@
-class Forum < ActiveRecord::Base
+class Category < ActiveRecord::Base
   acts_as_list
 
   validates_presence_of :name
@@ -9,7 +9,7 @@ class Forum < ActiveRecord::Base
   has_many :topics, :order => 'sticky desc, replied_at desc', :dependent => :delete_all
   has_one  :recent_topic, :class_name => 'Topic', :order => 'sticky desc, replied_at desc'
 
-  # this is used to see if a forum is "fresh"... we can't use topics because it puts
+  # this is used to see if a category is "fresh"... we can't use topics because it puts
   # stickies first even if they are not the most recently modified
   has_many :recent_topics, :class_name => 'Topic', :order => 'replied_at DESC'
   has_one  :recent_topic,  :class_name => 'Topic', :order => 'replied_at DESC'
@@ -19,7 +19,7 @@ class Forum < ActiveRecord::Base
 
   format_attribute :description
   
-  # retrieves forums ordered by position
+  # retrieves categories ordered by position
   def self.find_ordered(options = {})
     find :all, options.update(:order => 'position')
   end

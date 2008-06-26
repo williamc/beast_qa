@@ -18,15 +18,15 @@ class PostTest < Test::Unit::TestCase
   end
 
   def test_should_create_reply
-    counts = lambda { [Post.count, forums(:rails).posts_count, users(:aaron).posts_count, topics(:pdi).posts_count] }
-    equal  = lambda { [forums(:rails).topics_count] }
+    counts = lambda { [Post.count, categories(:rails).posts_count, users(:aaron).posts_count, topics(:pdi).posts_count] }
+    equal  = lambda { [categories(:rails).topics_count] }
     old_counts = counts.call
     old_equal  = equal.call
     
     p = create_post topics(:pdi), :body => 'blah'
     assert_valid p
 
-    [forums(:rails), users(:aaron), topics(:pdi)].each &:reload
+    [categories(:rails), users(:aaron), topics(:pdi)].each &:reload
     
     assert_equal old_counts.collect { |n| n + 1}, counts.call
     assert_equal old_equal, equal.call
@@ -55,18 +55,18 @@ class PostTest < Test::Unit::TestCase
     end
   end
 
-  def test_should_create_reply_and_set_forum_from_topic
+  def test_should_create_reply_and_set_category_from_topic
     p = create_post topics(:pdi), :body => 'blah'
-    assert_equal topics(:pdi).forum_id, p.forum_id
+    assert_equal topics(:pdi).category_id, p.category_id
   end
 
   def test_should_delete_reply
-    counts = lambda { [Post.count, forums(:rails).posts_count, users(:sam).posts_count, topics(:pdi).posts_count] }
-    equal  = lambda { [forums(:rails).topics_count] }
+    counts = lambda { [Post.count, categories(:rails).posts_count, users(:sam).posts_count, topics(:pdi).posts_count] }
+    equal  = lambda { [categories(:rails).topics_count] }
     old_counts = counts.call
     old_equal  = equal.call
     posts(:pdi_reply).destroy
-    [forums(:rails), users(:sam), topics(:pdi)].each &:reload
+    [categories(:rails), users(:sam), topics(:pdi)].each &:reload
     assert_equal old_counts.collect { |n| n - 1}, counts.call
     assert_equal old_equal, equal.call
   end
@@ -92,8 +92,8 @@ class PostTest < Test::Unit::TestCase
       returning topic.posts.build(options) do |p|
         p.user = users(:aaron)
         p.save
-        # post should inherit the forum from the topic
-        assert_equal p.topic.forum, p.forum
+        # post should inherit the category from the topic
+        assert_equal p.topic.category, p.category
       end
     end
 end

@@ -1,6 +1,6 @@
 <div class="crumbs" xstyle="margin-top:1.1em;">
-  <%= link_to 'Forums'[:forums_title], home_path %> <span class="arrow">&rarr;</span>
-  <%= link_to h(@forum.name), forum_path(@forum) %> <span class="arrow">&rarr;</span>
+  <%= link_to 'Categories'[:categories_title], home_path %> <span class="arrow">&rarr;</span>
+  <%= link_to h(@category.name), category_path(@category) %> <span class="arrow">&rarr;</span>
 </div>
 
 
@@ -10,9 +10,9 @@
 
 <%= error_messages_for :topic %>
 <% form_for :topic,
-     :url  => topics_path(@forum) do |f| -%>
+     :url  => topics_path(@category) do |f| -%>
 <%= render :partial => "form", :object => f %>
-<%= submit_tag 'Post Topic'[], :or => link_to('Cancel'[], forum_path(@forum)) %>
+<%= submit_tag 'Post Topic'[], :or => link_to('Cancel'[], category_path(@category)) %>
 <% end -%>
 
 <%= javascript_tag "$('topic_title').focus();" %>

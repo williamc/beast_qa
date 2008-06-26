@@ -1,12 +1,12 @@
 class Topic < ActiveRecord::Base
-  validates_presence_of :forum, :user, :title
+  validates_presence_of :category, :user, :title
   before_create  :set_default_replied_at_and_sticky
-  before_update  :check_for_changing_forums
-  after_save     :update_forum_counter_cache
+  before_update  :check_for_changing_categories
+  after_save     :update_category_counter_cache
   before_destroy :update_post_user_counts
-  after_destroy  :update_forum_counter_cache
+  after_destroy  :update_category_counter_cache
 
-  belongs_to :forum
+  belongs_to :category
   belongs_to :user
   belongs_to :last_post, :class_name => "Post", :foreign_key => 'last_post_id'
   has_many :monitorships
@@ -38,7 +38,7 @@ class Topic < ActiveRecord::Base
   end
 
   def editable_by?(user)
-    user && (user.id == user_id || user.admin? || user.moderator_of?(forum_id))
+    user && (user.id == user_id || user.admin? || user.moderator_of?(category_id))
   end
   
   def update_cached_post_fields(post)
@@ -58,34 +58,34 @@ class Topic < ActiveRecord::Base
       self.sticky   ||= 0
     end
 
-    def set_post_forum_id
-      Post.update_all ['forum_id = ?', forum_id], ['topic_id = ?', id]
+    def set_post_category_id
+      Post.update_all ['category_id = ?', category_id], ['topic_id = ?', id]
     end
 
-    def check_for_changing_forums
+    def check_for_changing_categories
       old = Topic.find(id)
-      @old_forum_id = old.forum_id if old.forum_id != forum_id
+      @old_category_id = old.category_id if old.category_id != category_id
       true
     end
     
     # using count isn't ideal but it gives us correct caches each time
-    def update_forum_counter_cache
-      forum_conditions = ['topics_count = ?', Topic.count(:id, :conditions => {:forum_id => forum_id})]
-      # if the topic moved forums
-      if !frozen? && @old_forum_id && @old_forum_id != forum_id
-        set_post_forum_id
-        Forum.update_all ['topics_count = ?, posts_count = ?', 
-          Topic.count(:id, :conditions => {:forum_id => @old_forum_id}),
-          Post.count(:id,  :conditions => {:forum_id => @old_forum_id})], ['id = ?', @old_forum_id]
+    def update_category_counter_cache
+      category_conditions = ['topics_count = ?', Topic.count(:id, :conditions => {:category_id => category_id})]
+      # if the topic moved categories
+      if !frozen? && @old_category_id && @old_category_id != category_id
+        set_post_category_id
+        Category.update_all ['topics_count = ?, posts_count = ?', 
+          Topic.count(:id, :conditions => {:category_id => @old_category_id}),
+          Post.count(:id,  :conditions => {:category_id => @old_category_id})], ['id = ?', @old_category_id]
       end
-      # if the topic moved forums or was deleted
-      if frozen? || (@old_forum_id && @old_forum_id != forum_id)
-        forum_conditions.first << ", posts_count = ?"
-        forum_conditions       << Post.count(:id, :conditions => {:forum_id => forum_id})
+      # if the topic moved categories or was deleted
+      if frozen? || (@old_category_id && @old_category_id != category_id)
+        category_conditions.first << ", posts_count = ?"
+        category_conditions       << Post.count(:id, :conditions => {:category_id => category_id})
       end
       @voices.each &:update_posts_count if @voices
-      Forum.update_all forum_conditions, ['id = ?', forum_id]
-      @old_forum_id = @voices = nil
+      Category.update_all category_conditions, ['id = ?', category_id]
+      @old_category_id = @voices = nil
     end
     
     def update_post_user_counts

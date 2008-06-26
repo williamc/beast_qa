@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
     50
   end
   has_many :moderatorships, :dependent => :destroy
-  has_many :forums, :through => :moderatorships, :order => "#{Forum.table_name}.name"
+  has_many :categories, :through => :moderatorships, :order => "#{Category.table_name}.name"
 
   has_many :posts
   has_many :topics
@@ -89,8 +89,8 @@ class User < ActiveRecord::Base
     reset_login_key!(login_key.blank?)
   end
 
-  def moderator_of?(forum)
-    moderatorships.count("#{Moderatorship.table_name}.id", :conditions => ['forum_id = ?', (forum.is_a?(Forum) ? forum.id : forum)]) == 1
+  def moderator_of?(category)
+    moderatorships.count("#{Moderatorship.table_name}.id", :conditions => ['category_id = ?', (category.is_a?(Category) ? category.id : category)]) == 1
   end
 
   def to_xml(options = {})

@@ -224,13 +224,13 @@ class UsersControllerTest < Test::Unit::TestCase
   end
 
   def test_should_add_moderator
-    assert !users(:sam).moderator_of?(forums(:comics))
+    assert !users(:sam).moderator_of?(categories(:comics))
     
     login_as :aaron
-    post :admin, :id => users(:sam).id, :user => { :admin => '1' }, :moderator => forums(:comics).id
+    post :admin, :id => users(:sam).id, :user => { :admin => '1' }, :moderator => categories(:comics).id
     assert_redirected_to user_path(users(:sam))
     
-    assert users(:sam).moderator_of?(forums(:comics))
+    assert users(:sam).moderator_of?(categories(:comics))
   end
 
   def test_should_require_admin_to_set_admin_properties

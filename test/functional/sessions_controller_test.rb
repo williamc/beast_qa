@@ -22,8 +22,8 @@ class SessionsControllerTest < Test::Unit::TestCase
   end
   
   def test_should_login_and_remember_url
-    post :create, :login => 'aaron', :password => 'testy', :to => '%2Fforums%2F1'
-    assert_redirected_to forum_path(1)
+    post :create, :login => 'aaron', :password => 'testy', :to => '%2Fcategories%2F1'
+    assert_redirected_to category_path(1)
   end
 
   def test_remember_me
@@ -71,8 +71,8 @@ class SessionsControllerTest < Test::Unit::TestCase
   
   def test_should_logout_and_remember_url
     login_as :aaron
-    get :destroy, :to => '%2Fforums%2F1'
-    assert_redirected_to forum_path(1)
+    get :destroy, :to => '%2Fcategories%2F1'
+    assert_redirected_to category_path(1)
     assert_nil session[:user_id]
   end
 

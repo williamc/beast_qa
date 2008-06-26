@@ -4,18 +4,18 @@ class TopicTest < Test::Unit::TestCase
   all_fixtures
 
   def test_save_should_update_post_id_for_posts_belonging_to_topic
-    # checking current forum_id's are in sync
+    # checking current category_id's are in sync
     topic = topics(:pdi)
-    post_forums = lambda do
-      topic.posts.each { |p| assert_equal p.forum_id, topic.forum_id }
+    post_categories = lambda do
+      topic.posts.each { |p| assert_equal p.category_id, topic.category_id }
     end
-    post_forums.call
-    assert_equal forums(:rails).id, topic.forum_id
+    post_categories.call
+    assert_equal categories(:rails).id, topic.category_id
     
-    # updating forum_id
-    topic.update_attribute :forum_id, forums(:comics).id
-    assert_equal forums(:comics).id, topic.reload.forum_id
-    post_forums.call
+    # updating category_id
+    topic.update_attribute :category_id, categories(:comics).id
+    assert_equal categories(:comics).id, topic.reload.category_id
+    post_categories.call
   end
 
   def test_knows_last_post
@@ -23,26 +23,26 @@ class TopicTest < Test::Unit::TestCase
   end
 
   def test_counts_are_valid
-    assert_equal forums(:rails).topics_count, forums(:rails).topics.size
-    assert_equal forums(:comics).topics_count, forums(:comics).topics.size
+    assert_equal categories(:rails).topics_count, categories(:rails).topics.size
+    assert_equal categories(:comics).topics_count, categories(:comics).topics.size
   end
   
-  def test_moving_topic_to_different_forum_preserves_counts
-    rails = lambda { [forums(:rails).topics_count, forums(:rails).posts_count] }
-    comics = lambda { [forums(:comics).topics_count, forums(:comics).posts_count] }
+  def test_moving_topic_to_different_category_preserves_counts
+    rails = lambda { [categories(:rails).topics_count, categories(:rails).posts_count] }
+    comics = lambda { [categories(:comics).topics_count, categories(:comics).posts_count] }
     old_rails = rails.call
     old_comics = comics.call
     
-    topics(:il8n).posts.each { |post| post.forum==forums(:rails) }
+    topics(:il8n).posts.each { |post| post.category==categories(:rails) }
     
     @topic=topics(:il8n)
-    @topic.forum=forums(:comics)
+    @topic.category=categories(:comics)
     @topic.save!
     
-    topics(:il8n).posts.each { |post| post.forum==forums(:comics) }
+    topics(:il8n).posts.each { |post| post.category==categories(:comics) }
     
-    forums(:rails).reload
-    forums(:comics).reload
+    categories(:rails).reload
+    categories(:comics).reload
   
     assert_equal old_rails.collect { |n| n - 1}, rails.call
     assert_equal old_comics.collect { |n| n + 1}, rails.call
@@ -62,20 +62,20 @@ class TopicTest < Test::Unit::TestCase
     assert_equal 4, @pdi.voices.size
   end
   
-  def test_should_require_title_user_and_forum
+  def test_should_require_title_user_and_category
     t=Topic.new
     t.valid?
     assert t.errors.on(:title)
     assert t.errors.on(:user)
-    assert t.errors.on(:forum)
+    assert t.errors.on(:category)
     assert ! t.save
     t.user  = users(:aaron)
     t.title = "happy life"
-    t.forum = forums(:rails)
+    t.category = categories(:rails)
     assert t.save
     assert_nil t.errors.on(:title)
     assert_nil t.errors.on(:user)
-    assert_nil t.errors.on(:forum)
+    assert_nil t.errors.on(:category)
   end
 
   def test_should_add_to_user_counter_cache
@@ -89,22 +89,22 @@ class TopicTest < Test::Unit::TestCase
   end
  
   def test_should_create_topic
-    counts = lambda { [Topic.count, forums(:rails).topics_count] }
+    counts = lambda { [Topic.count, categories(:rails).topics_count] }
     old = counts.call
-    t = forums(:rails).topics.build(:title => 'foo')
+    t = categories(:rails).topics.build(:title => 'foo')
     t.user = users(:aaron)
     assert_valid t
     t.save
     assert_equal 0, t.sticky
-    [forums(:rails), users(:aaron)].each &:reload
+    [categories(:rails), users(:aaron)].each &:reload
     assert_equal old.collect { |n| n + 1}, counts.call
   end
   
   def test_should_delete_topic
-    counts = lambda { [Topic.count, Post.count, forums(:rails).topics_count, forums(:rails).posts_count,  users(:sam).posts_count] }
+    counts = lambda { [Topic.count, Post.count, categories(:rails).topics_count, categories(:rails).posts_count,  users(:sam).posts_count] }
     old = counts.call
     topics(:ponies).destroy
-    [forums(:rails), users(:sam)].each &:reload
+    [categories(:rails), users(:sam)].each &:reload
     assert_equal old.collect { |n| n - 1}, counts.call
   end
   
@@ -120,7 +120,7 @@ class TopicTest < Test::Unit::TestCase
     t=Topic.new
     t.user=users(:aaron)
     t.title = "happy life"
-    t.forum = forums(:rails)
+    t.category = categories(:rails)
     assert t.save
     assert_not_nil t.replied_at
     assert t.replied_at <= Time.now.utc

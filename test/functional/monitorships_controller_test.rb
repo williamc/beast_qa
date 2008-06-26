@@ -13,14 +13,14 @@ class MonitorshipsControllerTest < Test::Unit::TestCase
   end
 
   def test_should_require_login
-    xhr :post, :create, :forum_id => forums(:rails).id, :topic_id => topics(:pdi).id, :id => users(:aaron).id
+    xhr :post, :create, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => users(:aaron).id
     assert_response :success
   end
   
   def test_should_add_monitorship
     login_as :joe
     assert_difference Monitorship, :count do 
-      xhr :post, :create, :forum_id => forums(:rails).id, :topic_id => topics(:pdi).id, :id => users(:joe).id
+      xhr :post, :create, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => users(:joe).id
       assert_response :success
     end
     
@@ -30,7 +30,7 @@ class MonitorshipsControllerTest < Test::Unit::TestCase
   def test_should_activate_monitorship
     login_as :sam
     assert_difference Monitorship, :count, 0 do
-      xhr :post, :create, :forum_id => forums(:rails).id, :topic_id => topics(:pdi).id, :id => users(:sam).id
+      xhr :post, :create, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => users(:sam).id
       assert_response :success
     end
   end
@@ -38,7 +38,7 @@ class MonitorshipsControllerTest < Test::Unit::TestCase
   def test_should_not_duplicate_monitorship
     login_as :aaron
     assert_difference Monitorship, :count, 0 do
-      xhr :post, :create, :forum_id => forums(:rails).id, :topic_id => topics(:pdi).id, :id => users(:aaron).id
+      xhr :post, :create, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => users(:aaron).id
       assert_response :success
     end
   end
@@ -46,7 +46,7 @@ class MonitorshipsControllerTest < Test::Unit::TestCase
   def test_should_deactivate_monitorship
     login_as :aaron
     assert_difference Monitorship, :count, 0 do
-      xhr :delete, :destroy, :forum_id => forums(:rails).id, :topic_id => topics(:pdi).id, :id => users(:aaron).id
+      xhr :delete, :destroy, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => users(:aaron).id
       assert_response :success
     end
 
@@ -54,15 +54,15 @@ class MonitorshipsControllerTest < Test::Unit::TestCase
   end
 
   def test_should_require_login_with_html
-    post :create, :forum_id => forums(:rails).id, :topic_id => topics(:pdi).id, :id => users(:aaron).id
+    post :create, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => users(:aaron).id
     assert_redirected_to login_path
   end
   
   def test_should_add_monitorship_with_html
     login_as :joe
     assert_difference Monitorship, :count do 
-      post :create, :forum_id => forums(:rails).id, :topic_id => topics(:pdi).id, :id => users(:joe).id
-      assert_redirected_to topic_path(forums(:rails), topics(:pdi))
+      post :create, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => users(:joe).id
+      assert_redirected_to topic_path(categories(:rails), topics(:pdi))
     end
     
     assert topics(:pdi).monitors(true).include?(users(:joe))
@@ -71,8 +71,8 @@ class MonitorshipsControllerTest < Test::Unit::TestCase
   def test_should_deactivate_monitorship_with_html
     login_as :aaron
     assert_difference Monitorship, :count, 0 do
-      delete :destroy, :forum_id => forums(:rails).id, :topic_id => topics(:pdi).id, :id => users(:aaron).id
-      assert_redirected_to topic_path(forums(:rails), topics(:pdi))
+      delete :destroy, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => users(:aaron).id
+      assert_redirected_to topic_path(categories(:rails), topics(:pdi))
     end
 
     assert !topics(:pdi).monitors(true).include?(users(:aaron))

@@ -3,7 +3,7 @@ class CreateTopics < ActiveRecord::Migration
   class Topic < ActiveRecord::Base; end
   def self.up
     create_table :topics do |t|
-      t.column "forum_id",    :integer
+      t.column "category_id",    :integer
       t.column "user_id",     :integer
       t.column "title",       :string
       t.column "created_at",  :datetime

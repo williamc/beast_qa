@@ -15,10 +15,10 @@
 
 <% if logged_in? %>
 
-<% form_tag monitorship_path(@forum, @topic), :style => 'margin-top:0em; float:right;' do -%>
+<% form_tag monitorship_path(@category, @topic), :style => 'margin-top:0em; float:right;' do -%>
 <div>
   <input id="monitor_checkbox" type="checkbox" <%= "checked='checked'" if @monitoring %> 
-    onclick="if (this.checked) {<%= remote_function :url => monitorship_path(@forum, @topic) %>} else {<%= remote_function :url => monitorship_path(@forum, @topic), :method => :delete %>}" />
+    onclick="if (this.checked) {<%= remote_function :url => monitorship_path(@category, @topic) %>} else {<%= remote_function :url => monitorship_path(@category, @topic), :method => :delete %>}" />
   <label id="monitor_label" for="monitor_checkbox"><%= @monitoring ? 'Monitoring topic'[] : 'Monitor topic'[] %></label>
   <%= hidden_field_tag '_method', 'delete' if @monitoring %>
   <%= submit_tag :Set, :id => 'monitor_submit' %>
@@ -29,13 +29,13 @@
 
 
 <div class="crumbs">
-  <%= link_to "Forums"[:forums_title], home_path %> <span class="arrow">&rarr;</span>
-  <%= link_to h(@topic.forum.name), forum_path(@topic.forum) %> 
+  <%= link_to "Categories"[:categories_title], home_path %> <span class="arrow">&rarr;</span>
+  <%= link_to h(@topic.category.name), category_path(@topic.category) %> 
   <% 
-  page=session[:forum_page] ? session[:forum_page][@topic.forum.id] : nil
+  page=session[:category_page] ? session[:category_page][@topic.category.id] : nil
   if page and page!=1 %>
   <small style="color:#ccc">
-  (<%= link_to 'page {page}'[:page, page], forum_path(:id => @topic.forum, :page => page) %>)
+  (<%= link_to 'page {page}'[:page, page], category_path(:id => @topic.category, :page => page) %>)
   </small>
   <% end %>
   <span class="arrow">&rarr;</span>
@@ -51,15 +51,15 @@
   <% if logged_in? %>
     <span style="display:none;" id="topic_mod">
       <% if @topic.editable_by?(current_user) -%>
-        <%= link_to('edit'[], edit_topic_path(@forum, @topic), :class => "utility") %> |
-        <%= link_to('delete'[], topic_path(@forum, @topic), :class => "utility", :method => :delete, :confirm => 'Delete this topic forever?'[:delete_topic_conf]) %>
+        <%= link_to('edit'[], edit_topic_path(@category, @topic), :class => "utility") %> |
+        <%= link_to('delete'[], topic_path(@category, @topic), :class => "utility", :method => :delete, :confirm => 'Delete this topic forever?'[:delete_topic_conf]) %>
       <% end -%>
     </span>
   <% end %>
 </h1>
 
 <p class="subtitle">
-  <%= feed_icon_tag @topic.title, formatted_topic_path(@forum, @topic, :rss) %>
+  <%= feed_icon_tag @topic.title, formatted_topic_path(@category, @topic, :rss) %>
   <%= '{count} post(s)'[(count=@topic.posts.size)==1 ? :post_count : :posts_count, number_with_delimiter(count)] %>, 
   <%= '{count} voice(s)'[(count=@topic.voices.size)==1 ? :voice_count : :voices_count, number_with_delimiter(count)] %>
 </p>
@@ -89,11 +89,11 @@
 
     <%= avatar_for post.user %>
     <span class="fn"><%= link_to truncate(h(post.user.display_name), 15), user_path(post.user), :class => (post.user == @posts.first.user ? "threadauthor" : nil) %></span>
-    <% if post.user.admin? or post.forum.moderators.include?(post.user) %>
+    <% if post.user.admin? or post.category.moderators.include?(post.user) %>
     <span class="admin">
       <% if post.user.admin? %>
       <%= 'Administator'[:administrator_title] %>
-      <% elsif post.forum.moderators.include?(post.user) %>
+      <% elsif post.category.moderators.include?(post.user) %>
       <%= 'Moderator'[:moderator_title] %>
       <% end %>
     </span>
@@ -106,9 +106,9 @@
       <span class="edit">
         <%= ajax_spinner_for "edit-post-#{post.id}", "spinner_bounce.gif" %>
         <%= link_to_remote('Edit post'[], 
-              {:url => edit_post_path(:forum_id => @forum, :topic_id => @topic, :id => post), :method => :get,
+              {:url => edit_post_path(:category_id => @category, :topic_id => @topic, :id => post), :method => :get,
                :before => "EditForm.init(#{post.id});", :condition => "!EditForm.isEditing(#{post.id})" }, 
-              {:href => edit_post_path(:forum_id => @forum, :topic_id => @topic, :id => post, :page => params[:page]), :class => "utility"}) %>
+              {:href => edit_post_path(:category_id => @category, :topic_id => @topic, :id => post, :page => params[:page]), :class => "utility"}) %>
       </span>
     </p>
     <% end -%>
@@ -144,7 +144,7 @@
 <div id="reply" class="editbox">
 <div class="container">
   <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
-  <% form_for :post, :url => posts_path(:forum_id => @forum, :topic_id => @topic, :page => @topic.last_page) do |f| -%>
+  <% form_for :post, :url => posts_path(:category_id => @category, :topic_id => @topic, :page => @topic.last_page) do |f| -%>
   <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <td rowspan="2" width="70%">
@@ -181,6 +181,6 @@
 <% end %>
 
 <div class="crumbs" style="margin-top:1.1em;">
-  <%= link_to "Forums"[:forums_title], home_path %> <span class="arrow">&rarr;</span>
-  <%= link_to h(@topic.forum.name), forum_path(@topic.forum) %> <span class="arrow">&rarr;</span>
+  <%= link_to "Categories"[:categories_title], home_path %> <span class="arrow">&rarr;</span>
+  <%= link_to h(@topic.category.name), category_path(@topic.category) %> <span class="arrow">&rarr;</span>
 </div>
