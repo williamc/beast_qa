@@ -20,15 +20,6 @@ ActiveRecord::Schema.define(:version => 53) do
     t.text    "description_html"
   end
 
-  create_table "forums", :force => true do |t|
-    t.string  "name"
-    t.string  "description"
-    t.integer "topics_count",     :limit => 11, :default => 0
-    t.integer "posts_count",      :limit => 11, :default => 0
-    t.integer "position",         :limit => 11
-    t.text    "description_html"
-  end
-
   create_table "logged_exceptions", :force => true do |t|
     t.string   "exception_class"
     t.string   "controller_name"
