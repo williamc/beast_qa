@@ -1,6 +1,6 @@
 require "#{File.dirname(__FILE__)}/../test_helper"
 
-class NewUserFirstPostTest < ActionController::IntegrationTest
+class CachingTest < ActionController::IntegrationTest
   all_fixtures
   
   def setup
