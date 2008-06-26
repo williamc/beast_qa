@@ -25,7 +25,7 @@ msgstr "Naam"
 msgid "Category|Description"
 msgstr "Omschrijving"
 
-msgid "Category|Topics count"
+msgid "Category|Questions count"
 msgstr ""
 
 msgid "Category|Posts count"
@@ -56,7 +56,7 @@ msgstr "bericht"
 msgid "Post|User"
 msgstr ""
 
-msgid "Post|Topic"
+msgid "Post|Question"
 msgstr ""
 
 msgid "Post|Body"
@@ -72,44 +72,44 @@ msgid "Post|Category"
 msgstr ""
 
 #: app/views/categories/show.rhtml:34
-#: app/views/topics/show.rhtml:22
-msgid "topic"
+#: app/views/questions/show.rhtml:22
+msgid "question"
 msgstr "onderwerp"
 
-msgid "Topic|Category"
+msgid "Question|Category"
 msgstr ""
 
-msgid "Topic|User"
+msgid "Question|User"
 msgstr ""
 
-msgid "Topic|Title"
+msgid "Question|Title"
 msgstr ""
 
-msgid "Topic|Created at"
+msgid "Question|Created at"
 msgstr ""
 
-msgid "Topic|Updated at"
+msgid "Question|Updated at"
 msgstr ""
 
-msgid "Topic|Hits"
+msgid "Question|Hits"
 msgstr ""
 
-msgid "Topic|Sticky"
+msgid "Question|Sticky"
 msgstr ""
 
-msgid "Topic|Posts count"
+msgid "Question|Posts count"
 msgstr ""
 
-msgid "Topic|Replied at"
+msgid "Question|Replied at"
 msgstr ""
 
-msgid "Topic|Locked"
+msgid "Question|Locked"
 msgstr ""
 
-msgid "Topic|Replied by"
+msgid "Question|Replied by"
 msgstr ""
 
-msgid "Topic|Last post"
+msgid "Question|Last post"
 msgstr ""
 
 msgid "user"
@@ -170,7 +170,7 @@ msgid "User|Activated"
 msgstr ""
 
 #: app/views/categories/_form.rhtml:8
-#: app/views/topics/_form.rhtml:2
+#: app/views/questions/_form.rhtml:2
 msgid "Title"
 msgstr "Titel"
 
@@ -186,8 +186,8 @@ msgstr "Omschrijving"
 #: app/views/categories/index.rhtml:16
 #: app/views/categories/show.rhtml:26
 #: app/views/layouts/application.rhtml:21
-#: app/views/topics/new.rhtml:2
-#: app/views/topics/show.rhtml:172
+#: app/views/questions/new.rhtml:2
+#: app/views/questions/show.rhtml:172
 msgid "Categories"
 msgstr "Categories"
 
@@ -201,8 +201,8 @@ msgstr "Category"
 
 #: app/views/categories/edit.rhtml:11
 #: app/views/categories/new.rhtml:9
-#: app/views/topics/edit.rhtml:9
-#: app/views/topics/new.rhtml:13
+#: app/views/questions/edit.rhtml:9
+#: app/views/questions/new.rhtml:13
 msgid "Cancel"
 msgstr "Annuleer"
 
@@ -231,7 +231,7 @@ msgstr "Recente berichten"
 
 #: app/views/categories/index.rhtml:19
 #: app/views/categories/index.rhtml:48
-msgid "topics"
+msgid "questions"
 msgstr "onderwerpen"
 
 #: app/views/categories/index.rhtml:19
@@ -245,7 +245,7 @@ msgid "voices"
 msgstr "stemmen"
 
 #: app/views/categories/index.rhtml:26
-#: app/views/topics/_form.rhtml:25
+#: app/views/questions/_form.rhtml:25
 msgid "Category"
 msgstr "Category"
 
@@ -299,14 +299,14 @@ msgstr "Wees altijd hoffelijk."
 #: app/views/posts/index.rhtml:60
 #: app/views/posts/monitored.rhtml:21
 #: app/views/posts/monitored.rhtml:62
-#: app/views/topics/show.rhtml:59
+#: app/views/questions/show.rhtml:59
 #: app/views/users/index.rhtml:19
 #: app/views/users/index.rhtml:51
 msgid "Pages:"
 msgstr "Pagina's:"
 
 #: app/views/categories/show.rhtml:48
-msgid "Topic"
+msgid "Question"
 msgstr "Onderwerpen"
 
 #: app/views/categories/show.rhtml:49
@@ -330,7 +330,7 @@ msgid "Next page"
 msgstr "Volgende pagina"
 
 #: app/views/categories/show.rhtml:99
-msgid "New topic"
+msgid "New question"
 msgstr "Nieuw onderwerp"
 
 #: app/views/layouts/application.rhtml:22
@@ -374,39 +374,39 @@ msgid "delete post"
 msgstr "verwijder bericht"
 
 #: app/views/posts/_edit.rhtml:17
-#: app/views/topics/show.rhtml:144
+#: app/views/questions/show.rhtml:144
 msgid "Formatting Help"
 msgstr "Opmaak Hulp"
 
 #: app/views/posts/_edit.rhtml:20
-#: app/views/topics/show.rhtml:147
+#: app/views/questions/show.rhtml:147
 msgid "*bold*"
 msgstr "*vet*"
 
 #: app/views/posts/_edit.rhtml:21
-#: app/views/topics/show.rhtml:149
+#: app/views/questions/show.rhtml:149
 msgid "_italics_"
 msgstr "_cursief_"
 
 #: app/views/posts/_edit.rhtml:22
-#: app/views/topics/show.rhtml:151
+#: app/views/questions/show.rhtml:151
 msgid "bq. <span>(quotes)</span>"
 msgstr "bq. <span>(citaten)</span>"
 
 #: app/views/posts/_edit.rhtml:24
-#: app/views/topics/show.rhtml:153
+#: app/views/questions/show.rhtml:153
 msgid "* or # <span>(lists)</span>"
 msgstr "* of # <span>(lijsten)</span>"
 
 #: app/views/posts/_edit.rhtml:32
-#: app/views/topics/edit.rhtml:9
+#: app/views/questions/edit.rhtml:9
 msgid "Save Changes"
 msgstr "Bewaar veranderingen"
 
 #: app/views/posts/_edit.rhtml:32
 #: app/views/posts/edit.rhtml:12
 #: app/views/sessions/new.rhtml:28
-#: app/views/topics/show.rhtml:160
+#: app/views/questions/show.rhtml:160
 #: app/views/users/edit.rhtml:22
 #: app/views/users/edit.rhtml:30
 msgid "cancel"
@@ -433,7 +433,7 @@ msgid "Searching for"
 msgstr "Zoeken naar"
 
 #: app/views/posts/monitored.rhtml:5
-msgid "s Monitored Topics"
+msgid "s Monitored Questions"
 msgstr "s Monitored Onderwerpen"
 
 #: app/views/posts/monitored.rhtml:17
@@ -441,7 +441,7 @@ msgid "found"
 msgstr "gevonden"
 
 #: app/views/posts/monitored.rhtml:48
-msgid "Topic:"
+msgid "Question:"
 msgstr "Onderwerp:"
 
 #: app/views/sessions/new.rhtml:10
@@ -472,67 +472,67 @@ msgstr "Type hier je email en er word een nieuwe login key naar je opgestuurd. K
 msgid "E-mail me the link"
 msgstr "Email mij de link"
 
-#: app/views/topics/_form.rhtml:7
+#: app/views/questions/_form.rhtml:7
 msgid "Sticky"
 msgstr "Sticky"
 
-#: app/views/topics/_form.rhtml:11
+#: app/views/questions/_form.rhtml:11
 msgid "Locked"
 msgstr "Gesloten"
 
-#: app/views/topics/_form.rhtml:19
+#: app/views/questions/_form.rhtml:19
 msgid "Body"
 msgstr "Body"
 
-#: app/views/topics/edit.rhtml:1
-msgid "Edit Topic"
+#: app/views/questions/edit.rhtml:1
+msgid "Edit Question"
 msgstr "Bewerk onderwerp"
 
-#: app/views/topics/new.rhtml:6
-msgid "New Topic"
+#: app/views/questions/new.rhtml:6
+msgid "New Question"
 msgstr "Nieuw onderwerp"
 
-#: app/views/topics/new.rhtml:7
+#: app/views/questions/new.rhtml:7
 msgid "by"
 msgstr "door"
 
-#: app/views/topics/new.rhtml:13
-msgid "Post Topic"
+#: app/views/questions/new.rhtml:13
+msgid "Post Question"
 msgstr "Plaats onderwerp"
 
-#: app/views/topics/show.rhtml:6
+#: app/views/questions/show.rhtml:6
 msgid "Voices"
 msgstr "stemmen"
 
-#: app/views/topics/show.rhtml:41
+#: app/views/questions/show.rhtml:41
 msgid "(locked)"
 msgstr "(gesloten)"
 
-#: app/views/topics/show.rhtml:46
+#: app/views/questions/show.rhtml:46
 msgid "edit"
 msgstr "bewerk"
 
-#: app/views/topics/show.rhtml:47
+#: app/views/questions/show.rhtml:47
 msgid "delete"
 msgstr "verwijder"
 
-#: app/views/topics/show.rhtml:47
-msgid "Delete this topic forever?"
+#: app/views/questions/show.rhtml:47
+msgid "Delete this question forever?"
 msgstr "Verwijder dit onderwerp permanent?"
 
-#: app/views/topics/show.rhtml:91
+#: app/views/questions/show.rhtml:91
 msgid "Edit post"
 msgstr "Bewerk bericht"
 
-#: app/views/topics/show.rhtml:126
-msgid "This topic is locked."
+#: app/views/questions/show.rhtml:126
+msgid "This question is locked."
 msgstr "Dit onderwerp is gesloten."
 
-#: app/views/topics/show.rhtml:130
-msgid "Reply to topic"
+#: app/views/questions/show.rhtml:130
+msgid "Reply to question"
 msgstr "Beantwoord onderwerp"
 
-#: app/views/topics/show.rhtml:160
+#: app/views/questions/show.rhtml:160
 msgid "Save Reply"
 msgstr "Bewaar antwoord"
 

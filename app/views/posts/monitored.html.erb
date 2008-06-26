@@ -2,10 +2,10 @@
 
 <% content_for :right do %>
 
-<h4><%= "{name}'s Monitored Topics"[:users_monitored_topics, link_to(h(@user.display_name), user_path(@user))] %></h4>
+<h4><%= "{name}'s Monitored Questions"[:users_monitored_questions, link_to(h(@user.display_name), user_path(@user))] %></h4>
 <ul class="flat">
-<% @user.monitored_topics.find(:all, :limit => 25).each do |topic| %>
-  <li><%= link_to topic.title, topic_path(topic.category_id, topic) %></li>
+<% @user.monitored_questions.find(:all, :limit => 25).each do |question| %>
+  <li><%= link_to question.title, question_path(question.category_id, question) %></li>
 <% end %>
 </ul>
 
@@ -43,7 +43,7 @@
     <span class="posts"><%= '{count} post(s)'[(count=post.user.posts.size)==1 ? :post_count : :posts_count, number_with_delimiter(count)] %></span>
   </td>
   <td class="body entry-content">
-    <p class="topic"><%= 'Topic'[:topic_title] %>: <%= link_to h(post.topic_title), topic_path(post.category_id, post.topic_id) %></p>
+    <p class="question"><%= 'Question'[:question_title] %>: <%= link_to h(post.question_title), question_path(post.category_id, post.question_id) %></p>
     
     <%= post.body_html %>
   </td>

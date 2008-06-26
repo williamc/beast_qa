@@ -2,7 +2,7 @@
 
 A small, light-weight category in Rails with a scary name and a goal of around 500 lines of code when we're done. [1]
 
-[1] The 500 LOC limit has officially been put to rest (http://beast.caboo.se/categories/1/topics/681), however the goal is unchanged: clean, readable code, and a great minimal category app.  Less is more.
+[1] The 500 LOC limit has officially been put to rest (http://beast.caboo.se/categories/1/questions/681), however the goal is unchanged: clean, readable code, and a great minimal category app.  Less is more.
 
 
 == How to Obtain Beast

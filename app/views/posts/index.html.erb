@@ -38,9 +38,9 @@
     <span class="posts"><%= '{count} posts'[(count=@users[post.user_id].posts.size)==1 ? :post_count : :posts_count, number_with_delimiter(count)] %></span>
   </td>
   <td class="body entry-content">
-    <p class="topic">
-      <%= "Topic"[:topic_title] %>: <%= link_to h(post.category_name), category_path(post.category_id) %> / 
-      <%= link_to h(post.topic_title), topic_path(post.category_id, post.topic_id) %>
+    <p class="question">
+      <%= "Question"[:question_title] %>: <%= link_to h(post.category_name), category_path(post.category_id) %> / 
+      <%= link_to h(post.question_title), question_path(post.category_id, post.question_id) %>
     </p>
     
     <%= post.body_html %>

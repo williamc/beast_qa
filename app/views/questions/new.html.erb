@@ -4,16 +4,16 @@
 </div>
 
 
-<h1 id="new_topic"><%= 'New Topic'[] %></h1>
+<h1 id="new_question"><%= 'New Question'[] %></h1>
 <p class="subtitle"><%= 'by {user}'[:by_user, current_user.display_name] %></p>
 
 
-<%= error_messages_for :topic %>
-<% form_for :topic,
-     :url  => topics_path(@category) do |f| -%>
+<%= error_messages_for :question %>
+<% form_for :question,
+     :url  => questions_path(@category) do |f| -%>
 <%= render :partial => "form", :object => f %>
-<%= submit_tag 'Post Topic'[], :or => link_to('Cancel'[], category_path(@category)) %>
+<%= submit_tag 'Post Question'[], :or => link_to('Cancel'[], category_path(@category)) %>
 <% end -%>
 
-<%= javascript_tag "$('topic_title').focus();" %>
+<%= javascript_tag "$('question_title').focus();" %>
 

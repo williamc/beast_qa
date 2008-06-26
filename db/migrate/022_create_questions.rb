@@ -1,8 +1,8 @@
-class CreateTopics < ActiveRecord::Migration
+class CreateQuestions < ActiveRecord::Migration
   class Post < ActiveRecord::Base; end
-  class Topic < ActiveRecord::Base; end
+  class Question < ActiveRecord::Base; end
   def self.up
-    create_table :topics do |t|
+    create_table :questions do |t|
       t.column "category_id",    :integer
       t.column "user_id",     :integer
       t.column "title",       :string
@@ -13,18 +13,18 @@ class CreateTopics < ActiveRecord::Migration
       t.column "posts_count", :integer,  :default => 0
       t.column "replied_at",  :datetime
     end
-    # find the old topics
-    Post.find(:all, :conditions => "id=topic_id").each do |old_topic|
-      topic=Topic.new
-      topic.id=old_topic.id
-      topic.attribute_names.each do |prop|
-        topic.send("#{prop}=", old_topic.send(prop))
-        topic.save!
+    # find the old questions
+    Post.find(:all, :conditions => "id=question_id").each do |old_question|
+      question=Question.new
+      question.id=old_question.id
+      question.attribute_names.each do |prop|
+        question.send("#{prop}=", old_question.send(prop))
+        question.save!
       end
     end
   end
 
   def self.down
-    drop_table :topics
+    drop_table :questions
   end
 end

@@ -8,9 +8,9 @@ class User < ActiveRecord::Base
   has_many :categories, :through => :moderatorships, :order => "#{Category.table_name}.name"
 
   has_many :posts
-  has_many :topics
+  has_many :questions
   has_many :monitorships
-  has_many :monitored_topics, :through => :monitorships, :conditions => ["#{Monitorship.table_name}.active = ?", true], :order => "#{Topic.table_name}.replied_at desc", :source => :topic
+  has_many :monitored_questions, :through => :monitorships, :conditions => ["#{Monitorship.table_name}.active = ?", true], :order => "#{Question.table_name}.replied_at desc", :source => :question
 
   validates_presence_of :login, :email
   validates_length_of   :login, :minimum => 2
@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   format_attribute :bio
 
   attr_reader :password
-  attr_protected :admin, :posts_count, :login, :created_at, :updated_at, :last_login_at, :topics_count, :activated
+  attr_protected :admin, :posts_count, :login, :created_at, :updated_at, :last_login_at, :questions_count, :activated
 
   def self.currently_online
     User.find(:all, :conditions => ["last_seen_at > ?", Time.now.utc-5.minutes])

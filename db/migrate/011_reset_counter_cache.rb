@@ -2,7 +2,7 @@ class ResetCounterCache < ActiveRecord::Migration
   def self.up
     
     Category.find(:all).each do | category |
-      category.topics_count=category.topics.count
+      category.questions_count=category.questions.count
       category.posts_count=category.posts.count
       category.save
     end

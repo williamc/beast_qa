@@ -31,65 +31,65 @@
 
 <p class="subtitle">
   <%= feed_icon_tag @category.name, formatted_category_posts_path(@category, :rss) %> 
-  <%= '{count} topic(s)'[(count=@category.topics.size)==1 ? :topic_count : :topics_count, number_with_delimiter(count)] %>, 
+  <%= '{count} question(s)'[(count=@category.questions.size)==1 ? :question_count : :questions_count, number_with_delimiter(count)] %>, 
   <%= '{count} post(s)'[(count=@category.posts.size)==1 ? :post_count : :posts_count, number_with_delimiter(count)] %>
 </p>
 
-<% if @topics.total_pages > 1 -%>
+<% if @questions.total_pages > 1 -%>
 <% if logged_in? %>
-<p style="float:right; margin-top:0;"><%= link_to 'New topic'[], new_topic_path(@category), :class => "utility" %></p>
+<p style="float:right; margin-top:0;"><%= link_to 'New question'[], new_question_path(@category), :class => "utility" %></p>
 <% end %>
-<%= pagination @topics %>
+<%= pagination @questions %>
 <% end -%>
 
-<table border="0" cellspacing="0" cellpadding="0" class="wide topics">
+<table border="0" cellspacing="0" cellpadding="0" class="wide questions">
 <tr>
-  <th class="la" colspan="2"><%= 'Topic'[:topic_title] %></th>
+  <th class="la" colspan="2"><%= 'Question'[:question_title] %></th>
   <th width="1%"><%= 'Posts'[:posts_title] %></th>
   <th width="1%"><%= 'Views'[:views_title] %></th>
   <th class="la"><%= 'Last post'[:last_post] %></th>
 </tr>
-<% for topic in @topics %>
+<% for question in @questions %>
 <tr class="hentry">
   <td style="padding:5px; width:16px;" class="c1">
     <% 
     icon = "comment"
     color = ""
-    if topic.locked?
+    if question.locked?
       icon = "lock"
-      post = ", this topic is locked."[:comma_locked_topic]
+      post = ", this question is locked."[:comma_locked_question]
       color = "darkgrey"
     end
     %>
-    <% if recent_topic_activity(topic) %>
+    <% if recent_question_activity(question) %>
     <%= image_tag "clearbits/#{icon}.gif", :class => "icon green", :title => "Recent activity"[]+"#{post}" %>
     <% else %>
       <%= image_tag "clearbits/#{icon}.gif", :class => "icon grey #{color}", :title => "No recent activity"[]+"#{post}" %>
     <% end %>
   </td>
   <td class="c2">
-    <%= "Sticky"[:sticky_title]+": <strong>" if topic.sticky? %>
-    <%= topic_title_link (topic), :class => "entry-title", :rel => "bookmark" %>
-    <%#= link_to h(topic.title), topic_path(@category, topic), :class => "entry-title", :rel => "bookmark" %>
-    <%= "</strong>" if topic.sticky? %>
-    <% if topic.paged? -%>
-    <small><%= link_to 'last'[], topic_path(:category_id => @category, :id => topic, :page => topic.last_page) %></small>
+    <%= "Sticky"[:sticky_title]+": <strong>" if question.sticky? %>
+    <%= question_title_link (question), :class => "entry-title", :rel => "bookmark" %>
+    <%#= link_to h(question.title), question_path(@category, question), :class => "entry-title", :rel => "bookmark" %>
+    <%= "</strong>" if question.sticky? %>
+    <% if question.paged? -%>
+    <small><%= link_to 'last'[], question_path(:category_id => @category, :id => question, :page => question.last_page) %></small>
     <% end -%>
   </td>
-  <td class="ca inv stat"><%= topic.posts.size %></td>
-  <td class="ca inv stat"><%= number_with_delimiter(topic.views) %></td>
+  <td class="ca inv stat"><%= question.posts.size %></td>
+  <td class="ca inv stat"><%= number_with_delimiter(question.views) %></td>
   <td class="lp">
-    <abbr class="updated" title="<%= topic.replied_at.xmlschema %>"><%= time_ago_in_words(topic.replied_at) %></abbr>
-    <%= 'by {user}'[:by_user, "<span class=\"author\"><strong class=\"fn\">#{h(topic.replied_by_user.display_name)}</strong></span>"] %>
-    <span><%= link_to 'view'[], topic_path(:category_id => @category, :id => topic, :page => topic.last_page, :anchor => "posts-#{topic.last_post_id}") %></span>
+    <abbr class="updated" title="<%= question.replied_at.xmlschema %>"><%= time_ago_in_words(question.replied_at) %></abbr>
+    <%= 'by {user}'[:by_user, "<span class=\"author\"><strong class=\"fn\">#{h(question.replied_by_user.display_name)}</strong></span>"] %>
+    <span><%= link_to 'view'[], question_path(:category_id => @category, :id => question, :page => question.last_page, :anchor => "posts-#{question.last_post_id}") %></span>
   </td>
 </tr>
 <% end %>
 </table>
 
-<%= next_page @topics %>
-<%= pagination @topics %>
+<%= next_page @questions %>
+<%= pagination @questions %>
 
 <% if logged_in? %>
-<p><%= link_to 'New topic'[:new_topic], new_topic_path(@category), :class => "utility" %></p>
+<p><%= link_to 'New question'[:new_question], new_question_path(@category), :class => "utility" %></p>
 <% end%>

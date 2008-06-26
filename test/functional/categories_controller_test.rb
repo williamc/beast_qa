@@ -93,9 +93,9 @@ class CategoriesControllerTest < Test::Unit::TestCase
   def test_should_show_category
     get :show, :id => 1
     assert_response :success
-    assert assigns(:topics)
+    assert assigns(:questions)
     # sticky should be first
-    assert_equal(topics(:sticky), assigns(:topics).first)
+    assert_equal(questions(:sticky), assigns(:questions).first)
     assert_select 'html>head'
   end
   

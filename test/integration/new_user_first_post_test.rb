@@ -9,7 +9,7 @@ class NewUserFirstPostTest < ActionController::IntegrationTest
   #
   # ha, fat chance of that happening!  -- rick
 
-  def test_signup_and_post_edit_and_topic
+  def test_signup_and_post_edit_and_question
     go_home
 
     get login_path
@@ -36,26 +36,26 @@ class NewUserFirstPostTest < ActionController::IntegrationTest
     # sign in
     # login("jgoebel","beast")
     
-    review_topic(topics(:pdi))    
-    first_post=add_reply(topics(:pdi), "I'm on it.")
+    review_question(questions(:pdi))    
+    first_post=add_reply(questions(:pdi), "I'm on it.")
     click_edit_post(first_post)
 
     # update that post
-    post post_path(:category_id => categories(:rails), :topic_id => topics(:pdi), :id => first_post), :post => { :body => "I change my mind, I'm scared."}, :_method => "put"
+    post post_path(:category_id => categories(:rails), :question_id => questions(:pdi), :id => first_post), :post => { :body => "I change my mind, I'm scared."}, :_method => "put"
     assert_response :redirect
     follow_redirect!
-    assert_template "topics/show"
+    assert_template "questions/show"
     assert_equal("I change my mind, I'm scared.", first_post.reload.body)
 
     # ponies
-    review_topic(topics(:ponies))
-    add_reply(topics(:ponies), "Ponies are cool.")
+    review_question(questions(:ponies))
+    add_reply(questions(:ponies), "Ponies are cool.")
     
-    # post new topic
-    post topics_path(:category_id => categories(:rails).id), :topic => { :title => "Beast rocks!", :body => "I love beast!"}
+    # post new question
+    post questions_path(:category_id => categories(:rails).id), :question => { :title => "Beast rocks!", :body => "I love beast!"}
     assert_response :redirect
     follow_redirect!
-    assert_template "topics/show"
+    assert_template "questions/show"
     
     # back to home
     go_home
@@ -80,19 +80,19 @@ class NewUserFirstPostTest < ActionController::IntegrationTest
     end
   
     # adds a reply to a particular post
-    def add_reply(topic,body)
-      post posts_path(topic.category, topic), :post => { :body => body }
+    def add_reply(question,body)
+      post posts_path(question.category, question), :post => { :body => body }
       assert_response :redirect
       post = assigns(:post)
       follow_redirect!
       assert_response :success
-      assert_template "topics/show"
+      assert_template "questions/show"
       post
     end
     
     # pulls up the edit form for a post
     def click_edit_post(post)
-      get edit_post_path(post.topic.category, post.topic, post)
+      get edit_post_path(post.question.category, post.question, post)
       assert_response :success
       assert_template "posts/edit"
     end
@@ -114,24 +114,24 @@ class NewUserFirstPostTest < ActionController::IntegrationTest
       assert_template "categories/index"
     end
     
-    # walks down the tree, index, category, topic
-    def review_topic(topic)
+    # walks down the tree, index, category, question
+    def review_question(question)
       get categories_path
       assert_response :success
       assert assigns(:categories)
       assert_template "categories/index"
 
-      get category_path(topic.category)
+      get category_path(question.category)
       assert_response :success
       assert assigns(:category)
-      assert assigns(:topics)
+      assert assigns(:questions)
       assert_template "categories/show"
 
-      get topic_path(topic.category, topic)
+      get question_path(question.category, question)
       assert_response :success
-      assert assigns(:topic)
+      assert assigns(:question)
       assert assigns(:posts)
-      assert_template "topics/show"
+      assert_template "questions/show"
     end
 
 end

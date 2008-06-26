@@ -26,7 +26,7 @@ class AddPostsBodyHtml < ActiveRecord::Migration
     def self.message_for_record(record, message)
       case record
         when Post
-          "Post ##{record.id} of /categories/#{record.category_id}/topics/#{record.topic_id}"
+          "Post ##{record.id} of /categories/#{record.category_id}/questions/#{record.question_id}"
         when User
           "User #{record.display_name} /users/##{record.id}"
         when Category

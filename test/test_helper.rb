@@ -15,7 +15,7 @@ class Test::Unit::TestCase
   self.use_instantiated_fixtures  = false
   
   def self.all_fixtures
-    fixtures :categories, :users, :posts, :topics, :moderatorships, :monitorships
+    fixtures :categories, :users, :posts, :questions, :moderatorships, :monitorships
   end
 
   def assert_difference(object, method = nil, difference = 1)
@@ -26,7 +26,7 @@ class Test::Unit::TestCase
   
   def login_as(user)
     @request.session[:user_id] = user ? users(user).id : nil
-    @request.session[:topics] = {}
+    @request.session[:questions] = {}
   end
 
   def authorize_as(user, mime_type = 'application/xml')

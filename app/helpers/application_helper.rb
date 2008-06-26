@@ -31,12 +31,12 @@ module ApplicationHelper
     end
   end
 
-  def topic_title_link(topic, options)
-    if topic.title =~ /^\[([^\]]{1,15})\]((\s+)\w+.*)/
+  def question_title_link(question, options)
+    if question.title =~ /^\[([^\]]{1,15})\]((\s+)\w+.*)/
       "<span class='flag'>#{$1}</span>" + 
-      link_to(h($2.strip), topic_path(@category, topic), options)
+      link_to(h($2.strip), question_path(@category, question), options)
     else
-      link_to(h(topic.title), topic_path(@category, topic), options)
+      link_to(h(question.title), question_path(@category, question), options)
     end
   end
 
@@ -51,7 +51,7 @@ module ApplicationHelper
   end
 
   # on windows and this isn't working like you expect?
-  # check: http://beast.caboo.se/categories/1/topics/657
+  # check: http://beast.caboo.se/categories/1/questions/657
   # strftime on windows doesn't seem to support %e and you'll need to 
   # use the less cool %d in the strftime line below
   def distance_of_time_in_words(from_time, to_time = 0, include_seconds = false)

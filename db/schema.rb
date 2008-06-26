@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(:version => 53) do
   create_table "categories", :force => true do |t|
     t.string  "name"
     t.string  "description"
-    t.integer "topics_count",     :limit => 11, :default => 0
+    t.integer "questions_count",  :limit => 11, :default => 0
     t.integer "posts_count",      :limit => 11, :default => 0
     t.integer "position",         :limit => 11
     t.text    "description_html"
@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(:version => 53) do
   add_index "moderatorships", ["category_id"], :name => "index_moderatorships_on_category_id"
 
   create_table "monitorships", :force => true do |t|
-    t.integer "topic_id", :limit => 11
-    t.integer "user_id",  :limit => 11
-    t.boolean "active",                 :default => true
+    t.integer "question_id", :limit => 11
+    t.integer "user_id",     :limit => 11
+    t.boolean "active",                    :default => true
   end
 
   create_table "open_id_authentication_associations", :force => true do |t|
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(:version => 53) do
 
   create_table "posts", :force => true do |t|
     t.integer  "user_id",     :limit => 11
-    t.integer  "topic_id",    :limit => 11
+    t.integer  "question_id", :limit => 11
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -75,7 +75,26 @@ ActiveRecord::Schema.define(:version => 53) do
 
   add_index "posts", ["category_id", "created_at"], :name => "index_posts_on_category_id"
   add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id"
-  add_index "posts", ["topic_id", "created_at"], :name => "index_posts_on_topic_id"
+  add_index "posts", ["question_id", "created_at"], :name => "index_posts_on_question_id"
+
+  create_table "questions", :force => true do |t|
+    t.integer  "category_id",  :limit => 11
+    t.integer  "user_id",      :limit => 11
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "hits",         :limit => 11, :default => 0
+    t.integer  "sticky",       :limit => 11, :default => 0
+    t.integer  "posts_count",  :limit => 11, :default => 0
+    t.datetime "replied_at"
+    t.boolean  "locked",                     :default => false
+    t.integer  "replied_by",   :limit => 11
+    t.integer  "last_post_id", :limit => 11
+  end
+
+  add_index "questions", ["category_id"], :name => "index_questions_on_category_id"
+  add_index "questions", ["category_id", "sticky", "replied_at"], :name => "index_questions_on_sticky_and_replied_at"
+  add_index "questions", ["category_id", "replied_at"], :name => "index_questions_on_category_id_and_replied_at"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id"

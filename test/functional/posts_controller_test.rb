@@ -13,16 +13,16 @@ class PostsControllerTest < Test::Unit::TestCase
   end
 
   def test_should_create_reply
-    counts = lambda { [Post.count, categories(:rails).posts_count, users(:aaron).posts_count, topics(:pdi).posts_count] }
-    equal  = lambda { [categories(:rails).topics_count] }
+    counts = lambda { [Post.count, categories(:rails).posts_count, users(:aaron).posts_count, questions(:pdi).posts_count] }
+    equal  = lambda { [categories(:rails).questions_count] }
     old_counts = counts.call
     old_equal  = equal.call
 
     login_as :aaron
-    post :create, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :post => { :body => 'blah' }
-    assert_redirected_to topic_path(:category_id => categories(:rails).id, :id => topics(:pdi).id, :anchor => assigns(:post).dom_id, :page => '1')
-    assert_equal topics(:pdi), assigns(:topic)
-    [categories(:rails), users(:aaron), topics(:pdi)].each &:reload
+    post :create, :category_id => categories(:rails).id, :question_id => questions(:pdi).id, :post => { :body => 'blah' }
+    assert_redirected_to question_path(:category_id => categories(:rails).id, :id => questions(:pdi).id, :anchor => assigns(:post).dom_id, :page => '1')
+    assert_equal questions(:pdi), assigns(:question)
+    [categories(:rails), users(:aaron), questions(:pdi)].each &:reload
   
     assert_equal old_counts.collect { |n| n + 1}, counts.call
     assert_equal old_equal, equal.call
@@ -31,37 +31,37 @@ class PostsControllerTest < Test::Unit::TestCase
   def test_should_create_reply_with_xml
     content_type 'application/xml'
     authorize_as :aaron
-    post :create, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :post => { :body => 'blah' }, :format => 'xml'
+    post :create, :category_id => categories(:rails).id, :question_id => questions(:pdi).id, :post => { :body => 'blah' }, :format => 'xml'
     assert_response :created
-    assert_equal formatted_post_url(:category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => assigns(:post), :format => :xml), @response.headers["Location"]
+    assert_equal formatted_post_url(:category_id => categories(:rails).id, :question_id => questions(:pdi).id, :id => assigns(:post), :format => :xml), @response.headers["Location"]
   end
 
-  def test_should_update_topic_replied_at_upon_replying
-    old=topics(:pdi).replied_at
+  def test_should_update_question_replied_at_upon_replying
+    old=questions(:pdi).replied_at
     login_as :aaron
-    post :create, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :post => { :body => 'blah' }
-    assert_not_equal(old, topics(:pdi).reload.replied_at)
-    assert old < topics(:pdi).reload.replied_at
+    post :create, :category_id => categories(:rails).id, :question_id => questions(:pdi).id, :post => { :body => 'blah' }
+    assert_not_equal(old, questions(:pdi).reload.replied_at)
+    assert old < questions(:pdi).reload.replied_at
   end
 
   def test_should_reply_with_no_body
     assert_difference Post, :count, 0 do
       login_as :aaron
-      post :create, :category_id => categories(:rails).id, :topic_id => posts(:pdi).id, :post => {}
-      assert_redirected_to topic_path(:category_id => categories(:rails).id, :id => posts(:pdi).id, :anchor => 'reply-form', :page => '1')
+      post :create, :category_id => categories(:rails).id, :question_id => posts(:pdi).id, :post => {}
+      assert_redirected_to question_path(:category_id => categories(:rails).id, :id => posts(:pdi).id, :anchor => 'reply-form', :page => '1')
     end
   end
 
   def test_should_delete_reply
-    counts = lambda { [Post.count, categories(:rails).posts_count, users(:sam).posts_count, topics(:pdi).posts_count] }
-    equal  = lambda { [categories(:rails).topics_count] }
+    counts = lambda { [Post.count, categories(:rails).posts_count, users(:sam).posts_count, questions(:pdi).posts_count] }
+    equal  = lambda { [categories(:rails).questions_count] }
     old_counts = counts.call
     old_equal  = equal.call
 
     login_as :aaron
-    delete :destroy, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => posts(:pdi_reply).id
-    assert_redirected_to topic_path(:category_id => categories(:rails), :id => topics(:pdi))
-    [categories(:rails), users(:sam), topics(:pdi)].each &:reload
+    delete :destroy, :category_id => categories(:rails).id, :question_id => questions(:pdi).id, :id => posts(:pdi_reply).id
+    assert_redirected_to question_path(:category_id => categories(:rails), :id => questions(:pdi))
+    [categories(:rails), users(:sam), questions(:pdi)].each &:reload
 
     assert_equal old_counts.collect { |n| n - 1}, counts.call
     assert_equal old_equal, equal.call
@@ -70,76 +70,76 @@ class PostsControllerTest < Test::Unit::TestCase
   def test_should_delete_reply_with_xml
     content_type 'application/xml'
     authorize_as :aaron
-    delete :destroy, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => posts(:pdi_reply).id, :format => 'xml'
+    delete :destroy, :category_id => categories(:rails).id, :question_id => questions(:pdi).id, :id => posts(:pdi_reply).id, :format => 'xml'
     assert_response :success
   end
 
   def test_should_delete_reply_as_moderator
     assert_difference Post, :count, -1 do
       login_as :sam
-      delete :destroy, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => posts(:pdi_rebuttal).id
+      delete :destroy, :category_id => categories(:rails).id, :question_id => questions(:pdi).id, :id => posts(:pdi_rebuttal).id
     end
   end
 
-  def test_should_delete_topic_if_deleting_the_last_reply
+  def test_should_delete_question_if_deleting_the_last_reply
     assert_difference Post, :count, -1 do
-      assert_difference Topic, :count, -1 do
+      assert_difference Question, :count, -1 do
         login_as :aaron
-        delete :destroy, :category_id => categories(:rails).id, :topic_id => topics(:il8n).id, :id => posts(:il8n).id
+        delete :destroy, :category_id => categories(:rails).id, :question_id => questions(:il8n).id, :id => posts(:il8n).id
         assert_redirected_to category_path(categories(:rails))
-        assert_raise(ActiveRecord::RecordNotFound) { topics(:il8n).reload }
+        assert_raise(ActiveRecord::RecordNotFound) { questions(:il8n).reload }
       end
     end
   end
 
   def test_can_edit_own_post
     login_as :sam
-    put :update, :category_id => categories(:comics).id, :topic_id => topics(:galactus).id, :id => posts(:silver_surfer).id, :post => {}
-    assert_redirected_to topic_path(:category_id => categories(:comics), :id => topics(:galactus), :anchor => posts(:silver_surfer).dom_id, :page => '1')
+    put :update, :category_id => categories(:comics).id, :question_id => questions(:galactus).id, :id => posts(:silver_surfer).id, :post => {}
+    assert_redirected_to question_path(:category_id => categories(:comics), :id => questions(:galactus), :anchor => posts(:silver_surfer).dom_id, :page => '1')
   end
 
   def test_can_edit_own_post_with_xml
     content_type 'application/xml'
     authorize_as :sam
-    put :update, :category_id => categories(:comics).id, :topic_id => topics(:galactus).id, :id => posts(:silver_surfer).id, :post => {}, :format => 'xml'
+    put :update, :category_id => categories(:comics).id, :question_id => questions(:galactus).id, :id => posts(:silver_surfer).id, :post => {}, :format => 'xml'
     assert_response :success
   end
 
 
   def test_can_edit_other_post_as_moderator
     login_as :sam
-    put :update, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => posts(:pdi_rebuttal).id, :post => {}
-    assert_redirected_to topic_path(:category_id => categories(:rails), :id => posts(:pdi), :anchor => posts(:pdi_rebuttal).dom_id, :page => '1')
+    put :update, :category_id => categories(:rails).id, :question_id => questions(:pdi).id, :id => posts(:pdi_rebuttal).id, :post => {}
+    assert_redirected_to question_path(:category_id => categories(:rails), :id => posts(:pdi), :anchor => posts(:pdi_rebuttal).dom_id, :page => '1')
   end
 
   def test_cannot_edit_other_post
     login_as :sam
-    put :update, :category_id => categories(:comics).id, :topic_id => topics(:galactus).id, :id => posts(:galactus).id, :post => {}
+    put :update, :category_id => categories(:comics).id, :question_id => questions(:galactus).id, :id => posts(:galactus).id, :post => {}
     assert_redirected_to login_path
   end
 
   def test_cannot_edit_other_post_with_xml
     content_type 'application/xml'
     authorize_as :sam
-    put :update, :category_id => categories(:comics).id, :topic_id => topics(:galactus).id, :id => posts(:galactus).id, :post => {}, :format => 'xml'
+    put :update, :category_id => categories(:comics).id, :question_id => questions(:galactus).id, :id => posts(:galactus).id, :post => {}, :format => 'xml'
     assert_response 401
   end
 
   def test_cannot_edit_own_post_user_id
     login_as :sam
-    put :update, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => posts(:pdi_reply).id, :post => { :user_id => 32 }
-    assert_redirected_to topic_path(:category_id => categories(:rails), :id => posts(:pdi), :anchor => posts(:pdi_reply).dom_id, :page => '1')
+    put :update, :category_id => categories(:rails).id, :question_id => questions(:pdi).id, :id => posts(:pdi_reply).id, :post => { :user_id => 32 }
+    assert_redirected_to question_path(:category_id => categories(:rails), :id => posts(:pdi), :anchor => posts(:pdi_reply).dom_id, :page => '1')
     assert_equal users(:sam).id, posts(:pdi_reply).reload.user_id
   end
 
   def test_can_edit_other_post_as_admin
     login_as :aaron
-    put :update, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => posts(:pdi_rebuttal).id, :post => {}
-    assert_redirected_to topic_path(:category_id => categories(:rails), :id => posts(:pdi), :anchor => posts(:pdi_rebuttal).dom_id, :page => '1')
+    put :update, :category_id => categories(:rails).id, :question_id => questions(:pdi).id, :id => posts(:pdi_rebuttal).id, :post => {}
+    assert_redirected_to question_path(:category_id => categories(:rails), :id => posts(:pdi), :anchor => posts(:pdi_rebuttal).dom_id, :page => '1')
   end
   
   def test_should_view_post_as_xml
-    get :show, :category_id => categories(:rails).id, :topic_id => topics(:pdi).id, :id => posts(:pdi_rebuttal).id, :format => 'xml'
+    get :show, :category_id => categories(:rails).id, :question_id => questions(:pdi).id, :id => posts(:pdi_rebuttal).id, :format => 'xml'
     assert_response :success
     assert_select 'post'
   end
@@ -230,13 +230,13 @@ class PostsControllerTest < Test::Unit::TestCase
     assert_models_equal [posts(:shield), posts(:silver_surfer), posts(:ponies), posts(:pdi_reply), posts(:sticky)], assigns(:posts)
   end
   
-  def test_disallow_new_post_to_locked_topic
-    galactus = topics(:galactus)
+  def test_disallow_new_post_to_locked_question
+    galactus = questions(:galactus)
     galactus.locked = 1
     galactus.save
     login_as :aaron
-    post :create, :category_id => categories(:comics).id, :topic_id => topics(:galactus).id, :post => { :body => 'blah' }
-    assert_redirected_to topic_path(:category_id => categories(:comics), :id => topics(:galactus))
-    assert_equal 'This topic is locked', flash[:notice]
+    post :create, :category_id => categories(:comics).id, :question_id => questions(:galactus).id, :post => { :body => 'blah' }
+    assert_redirected_to question_path(:category_id => categories(:comics), :id => questions(:galactus))
+    assert_equal 'This question is locked', flash[:notice]
   end
 end

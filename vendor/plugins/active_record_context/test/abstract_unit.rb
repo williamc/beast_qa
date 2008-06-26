@@ -18,14 +18,14 @@ load(File.dirname(__FILE__) + "/schema.rb")
 
 ActiveRecord::Base.send :include, Technoweenie::ActiveRecordContext
 
-class Topic < ActiveRecord::Base
+class Question < ActiveRecord::Base
 end
 
 class Post < ActiveRecord::Base; end
 class NormalPost < Post
-  belongs_to :topic
+  belongs_to :question
 end
 
 class PolymorphPost < Post
-  belongs_to :topic, :polymorphic => true
+  belongs_to :question, :polymorphic => true
 end

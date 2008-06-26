@@ -1,9 +1,9 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-var TopicForm = {
+var QuestionForm = {
   editNewTitle: function(txtField) {
-    $('new_topic').innerHTML = (txtField.value.length > 5) ? txtField.value : 'New Topic';
+    $('new_question').innerHTML = (txtField.value.length > 5) ? txtField.value : 'New Question';
   }
 }
 

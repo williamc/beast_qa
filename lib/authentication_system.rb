@@ -1,10 +1,10 @@
 module AuthenticationSystem
   protected
-    # this is used to keep track of the last time a user has been seen (reading a topic)
-    # it is used to know when topics are new or old and which should have the green
+    # this is used to keep track of the last time a user has been seen (reading a question)
+    # it is used to know when questions are new or old and which should have the green
     # activity light next to them
     #
-    # we cheat by not calling it all the time, but rather only when a user views a topic
+    # we cheat by not calling it all the time, but rather only when a user views a question
     # which means it isn't truly "last seen at" but it does serve it's intended purpose
     #
     # this could be a filter for the entire app and keep with it's true meaning, but that 
@@ -53,7 +53,7 @@ module AuthenticationSystem
         session[:user_id] = @current_user.id 
         # this is used while we're logged in to know which threads are new, etc
         session[:last_active] = @current_user.last_seen_at
-        session[:topics] = session[:categories] = {}
+        session[:questions] = session[:categories] = {}
         update_last_seen_at
       end
     end

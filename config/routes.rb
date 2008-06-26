@@ -7,9 +7,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :member => { :admin => :post }, :has_many => [:moderators, :posts]
   
   map.resources :categories, :has_many => [:posts] do |category|
-    category.resources :topics, :name_prefix => nil do |topic|
-      topic.resources :posts, :name_prefix => nil
-      topic.resource :monitorship, :name_prefix => nil
+    category.resources :questions, :name_prefix => nil do |question|
+      question.resources :posts, :name_prefix => nil
+      question.resource :monitorship, :name_prefix => nil
     end
     category.resources :posts, :name_prefix => 'category_'
   end

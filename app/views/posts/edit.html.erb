@@ -1,13 +1,13 @@
 <h1><%= 'Edit Post'[] %></h1>
 
-<h2><%= link_to h(@post.topic.title), topic_path(@post.category_id, @post.topic) %></h2>
+<h2><%= link_to h(@post.question.title), question_path(@post.category_id, @post.question) %></h2>
 
-<%= link_to('Delete post'[], post_path(:category_id => @post.category_id, :topic_id => @post.topic, :id => @post, :page => params[:page]), 
+<%= link_to('Delete post'[], post_path(:category_id => @post.category_id, :question_id => @post.question, :id => @post, :page => params[:page]), 
       :class => "utility", :method => :delete, :confirm => 'Delete this post forever?'[:delete_post_conf]) %>
 
-<%= error_messages_for :topic %>
+<%= error_messages_for :question %>
 <% form_for :post, :html => { :method => :put }, 
-     :url  => post_path(:category_id => params[:category_id], :id => params[:topic_id], :id => @post, :page => params[:page]) do |f| -%>
+     :url  => post_path(:category_id => params[:category_id], :id => params[:question_id], :id => @post, :page => params[:page]) do |f| -%>
 <p id="post_body"><%= f.text_area :body %></p>
-<%= submit_tag 'Save'[:save_title] %> or <%= link_to 'cancel'[], topic_path(:category_id => params[:category_id], :id => params[:topic_id], :page => params[:page]) %>
+<%= submit_tag 'Save'[:save_title] %> or <%= link_to 'cancel'[], question_path(:category_id => params[:category_id], :id => params[:question_id], :page => params[:page]) %>
 <% end -%>

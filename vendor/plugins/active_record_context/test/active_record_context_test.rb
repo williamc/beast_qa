@@ -4,9 +4,9 @@ class ActiveRecordContextTest < Test::Unit::TestCase
   def setup
     Post.destroy_all
     @posts = []
-    @topic = Topic.create! :title => 'test'
-    @posts << NormalPost.create!(:body => 'normal body', :topic => @topic)
-    @posts << PolymorphPost.create!(:body => 'polymorph body', :topic => @topic)
+    @question = Question.create! :title => 'test'
+    @posts << NormalPost.create!(:body => 'normal body', :question => @question)
+    @posts << PolymorphPost.create!(:body => 'polymorph body', :question => @question)
     assert_equal 2, @posts.size
     assert_equal 2, Post.count
     assert_nil Post.context_cache
@@ -54,38 +54,38 @@ class ActiveRecordContextTest < Test::Unit::TestCase
   
   def test_should_find_belongs_to_record
     Post.with_context do
-      Topic.find :all ; Topic.delete_all
-      assert_equal @topic, @posts[0].topic(true)
+      Question.find :all ; Question.delete_all
+      assert_equal @question, @posts[0].question(true)
     end
     
-    assert_equal @topic, @posts[0].topic
-    assert_nil @posts[0].topic(true)
+    assert_equal @question, @posts[0].question
+    assert_nil @posts[0].question(true)
   end
   
   def test_should_find_belongs_to_polymorphic_record
     Post.with_context do
-      Topic.find :all ; Topic.delete_all
-      assert_equal @topic, @posts[1].topic(true)
+      Question.find :all ; Question.delete_all
+      assert_equal @question, @posts[1].question(true)
     end
     
-    assert_equal @topic, @posts[1].topic
-    assert_nil @posts[1].topic(true)
+    assert_equal @question, @posts[1].question
+    assert_nil @posts[1].question(true)
   end
   
   def test_default_prefetch_methods
-    {Topic => 'topic_id', Post => 'post_id'}.each do |klass, expected|
+    {Question => 'question_id', Post => 'post_id'}.each do |klass, expected|
       assert_equal expected, klass.prefetch_default
     end
   end
   
   def test_should_prefetch_ids
-    Topic.expects(:find).with(:all, :conditions => {:id => [1,2,3]})
-    Topic.prefetch [1,2,3]
+    Question.expects(:find).with(:all, :conditions => {:id => [1,2,3]})
+    Question.prefetch [1,2,3]
   end
   
   def test_should_prefetch_by_parent_records
-    Topic.expects(:find).with(:all, :conditions => {:id => [@topic.id]})
-    Topic.prefetch @posts
+    Question.expects(:find).with(:all, :conditions => {:id => [@question.id]})
+    Question.prefetch @posts
   end
   
   def test_should_reload_record

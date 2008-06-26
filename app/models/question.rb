@@ -1,4 +1,4 @@
-class Topic < ActiveRecord::Base
+class Question < ActiveRecord::Base
   validates_presence_of :category, :user, :title
   before_create  :set_default_replied_at_and_sticky
   before_update  :check_for_changing_categories
@@ -59,26 +59,26 @@ class Topic < ActiveRecord::Base
     end
 
     def set_post_category_id
-      Post.update_all ['category_id = ?', category_id], ['topic_id = ?', id]
+      Post.update_all ['category_id = ?', category_id], ['question_id = ?', id]
     end
 
     def check_for_changing_categories
-      old = Topic.find(id)
+      old = Question.find(id)
       @old_category_id = old.category_id if old.category_id != category_id
       true
     end
     
     # using count isn't ideal but it gives us correct caches each time
     def update_category_counter_cache
-      category_conditions = ['topics_count = ?', Topic.count(:id, :conditions => {:category_id => category_id})]
-      # if the topic moved categories
+      category_conditions = ['questions_count = ?', Question.count(:id, :conditions => {:category_id => category_id})]
+      # if the question moved categories
       if !frozen? && @old_category_id && @old_category_id != category_id
         set_post_category_id
-        Category.update_all ['topics_count = ?, posts_count = ?', 
-          Topic.count(:id, :conditions => {:category_id => @old_category_id}),
+        Category.update_all ['questions_count = ?, posts_count = ?', 
+          Question.count(:id, :conditions => {:category_id => @old_category_id}),
           Post.count(:id,  :conditions => {:category_id => @old_category_id})], ['id = ?', @old_category_id]
       end
-      # if the topic moved categories or was deleted
+      # if the question moved categories or was deleted
       if frozen? || (@old_category_id && @old_category_id != category_id)
         category_conditions.first << ", posts_count = ?"
         category_conditions       << Post.count(:id, :conditions => {:category_id => category_id})

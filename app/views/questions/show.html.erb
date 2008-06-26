@@ -1,11 +1,11 @@
-<% @page_title = @topic.title %>
-<% @monitoring = logged_in? && !Monitorship.count(:id, :conditions => ['user_id = ? and topic_id = ? and active = ?', current_user.id, @topic.id, true]).zero? %>
+<% @page_title = @question.title %>
+<% @monitoring = logged_in? && !Monitorship.count(:id, :conditions => ['user_id = ? and question_id = ? and active = ?', current_user.id, @question.id, true]).zero? %>
 
 <% content_for :right do -%>
 
 <h5><%= 'Voices'[:voices_title] %></h5>
 <ul class="flat talking">
-<% @topic.voices.each do | user | %>
+<% @question.voices.each do | user | %>
   <li><%= link_to h(user.display_name), user_path(user) %></li>
 <% end %>
 </ul>
@@ -15,11 +15,11 @@
 
 <% if logged_in? %>
 
-<% form_tag monitorship_path(@category, @topic), :style => 'margin-top:0em; float:right;' do -%>
+<% form_tag monitorship_path(@category, @question), :style => 'margin-top:0em; float:right;' do -%>
 <div>
   <input id="monitor_checkbox" type="checkbox" <%= "checked='checked'" if @monitoring %> 
-    onclick="if (this.checked) {<%= remote_function :url => monitorship_path(@category, @topic) %>} else {<%= remote_function :url => monitorship_path(@category, @topic), :method => :delete %>}" />
-  <label id="monitor_label" for="monitor_checkbox"><%= @monitoring ? 'Monitoring topic'[] : 'Monitor topic'[] %></label>
+    onclick="if (this.checked) {<%= remote_function :url => monitorship_path(@category, @question) %>} else {<%= remote_function :url => monitorship_path(@category, @question), :method => :delete %>}" />
+  <label id="monitor_label" for="monitor_checkbox"><%= @monitoring ? 'Monitoring question'[] : 'Monitor question'[] %></label>
   <%= hidden_field_tag '_method', 'delete' if @monitoring %>
   <%= submit_tag :Set, :id => 'monitor_submit' %>
 </div>
@@ -30,38 +30,38 @@
 
 <div class="crumbs">
   <%= link_to "Categories"[:categories_title], home_path %> <span class="arrow">&rarr;</span>
-  <%= link_to h(@topic.category.name), category_path(@topic.category) %> 
+  <%= link_to h(@question.category.name), category_path(@question.category) %> 
   <% 
-  page=session[:category_page] ? session[:category_page][@topic.category.id] : nil
+  page=session[:category_page] ? session[:category_page][@question.category.id] : nil
   if page and page!=1 %>
   <small style="color:#ccc">
-  (<%= link_to 'page {page}'[:page, page], category_path(:id => @topic.category, :page => page) %>)
+  (<%= link_to 'page {page}'[:page, page], category_path(:id => @question.category, :page => page) %>)
   </small>
   <% end %>
   <span class="arrow">&rarr;</span>
 </div>
 
-<h1 id="topic-title" style="margin-top:0.5em;"<%= %( onmouseover="$('topic_mod').show();" onmouseout="$('topic_mod').hide();") if logged_in? %>>
+<h1 id="question-title" style="margin-top:0.5em;"<%= %( onmouseover="$('question_mod').show();" onmouseout="$('question_mod').hide();") if logged_in? %>>
 
 
-  <%= h @topic.title %>
-  <% if @topic.locked? %>
+  <%= h @question.title %>
+  <% if @question.locked? %>
   <span>(<%= 'locked'[] %>)</span>
   <% end %>
   <% if logged_in? %>
-    <span style="display:none;" id="topic_mod">
-      <% if @topic.editable_by?(current_user) -%>
-        <%= link_to('edit'[], edit_topic_path(@category, @topic), :class => "utility") %> |
-        <%= link_to('delete'[], topic_path(@category, @topic), :class => "utility", :method => :delete, :confirm => 'Delete this topic forever?'[:delete_topic_conf]) %>
+    <span style="display:none;" id="question_mod">
+      <% if @question.editable_by?(current_user) -%>
+        <%= link_to('edit'[], edit_question_path(@category, @question), :class => "utility") %> |
+        <%= link_to('delete'[], question_path(@category, @question), :class => "utility", :method => :delete, :confirm => 'Delete this question forever?'[:delete_question_conf]) %>
       <% end -%>
     </span>
   <% end %>
 </h1>
 
 <p class="subtitle">
-  <%= feed_icon_tag @topic.title, formatted_topic_path(@category, @topic, :rss) %>
-  <%= '{count} post(s)'[(count=@topic.posts.size)==1 ? :post_count : :posts_count, number_with_delimiter(count)] %>, 
-  <%= '{count} voice(s)'[(count=@topic.voices.size)==1 ? :voice_count : :voices_count, number_with_delimiter(count)] %>
+  <%= feed_icon_tag @question.title, formatted_question_path(@category, @question, :rss) %>
+  <%= '{count} post(s)'[(count=@question.posts.size)==1 ? :post_count : :posts_count, number_with_delimiter(count)] %>, 
+  <%= '{count} voice(s)'[(count=@question.voices.size)==1 ? :voice_count : :voices_count, number_with_delimiter(count)] %>
 </p>
 
 <%= pagination @posts %>
@@ -106,9 +106,9 @@
       <span class="edit">
         <%= ajax_spinner_for "edit-post-#{post.id}", "spinner_bounce.gif" %>
         <%= link_to_remote('Edit post'[], 
-              {:url => edit_post_path(:category_id => @category, :topic_id => @topic, :id => post), :method => :get,
+              {:url => edit_post_path(:category_id => @category, :question_id => @question, :id => post), :method => :get,
                :before => "EditForm.init(#{post.id});", :condition => "!EditForm.isEditing(#{post.id})" }, 
-              {:href => edit_post_path(:category_id => @category, :topic_id => @topic, :id => post, :page => params[:page]), :class => "utility"}) %>
+              {:href => edit_post_path(:category_id => @category, :question_id => @question, :id => post, :page => params[:page]), :class => "utility"}) %>
       </span>
     </p>
     <% end -%>
@@ -131,20 +131,20 @@
 
 <% if logged_in? %>
 <div id="edit"></div>
-<% if @topic.locked? %>
+<% if @question.locked? %>
 <p>
-    <%= image_tag "clearbits/lock.gif", :class => "icon grey", :title => "Topic locked"[:topic_locked_title] %> 
+    <%= image_tag "clearbits/lock.gif", :class => "icon grey", :title => "Question locked"[:question_locked_title] %> 
     <label>
-    <%= 'This topic is locked'[:locked_topic] %>.</label>
+    <%= 'This question is locked'[:locked_question] %>.</label>
 </p>
 <% else %>
 
-<p><%= link_to_function 'Reply to topic'[], "ReplyForm.init()", :class => "utility" %></p>
+<p><%= link_to_function 'Reply to question'[], "ReplyForm.init()", :class => "utility" %></p>
 
 <div id="reply" class="editbox">
 <div class="container">
   <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
-  <% form_for :post, :url => posts_path(:category_id => @category, :topic_id => @topic, :page => @topic.last_page) do |f| -%>
+  <% form_for :post, :url => posts_path(:category_id => @category, :question_id => @question, :page => @question.last_page) do |f| -%>
   <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <td rowspan="2" width="70%">
@@ -182,5 +182,5 @@
 
 <div class="crumbs" style="margin-top:1.1em;">
   <%= link_to "Categories"[:categories_title], home_path %> <span class="arrow">&rarr;</span>
-  <%= link_to h(@topic.category.name), category_path(@topic.category) %> <span class="arrow">&rarr;</span>
+  <%= link_to h(@question.category.name), category_path(@question.category) %> <span class="arrow">&rarr;</span>
 </div>

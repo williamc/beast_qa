@@ -21,8 +21,8 @@ class CategoriesController < ApplicationController
         (session[:categories] ||= {})[@category.id] = Time.now.utc if logged_in?
         (session[:category_page] ||= Hash.new(1))[@category.id] = params[:page].to_i if params[:page]
 
-        @topics = @category.topics.paginate :page => params[:page]
-        User.find(:all, :conditions => ['id IN (?)', @topics.collect { |t| t.replied_by }.uniq]) unless @topics.blank?
+        @questions = @category.questions.paginate :page => params[:page]
+        User.find(:all, :conditions => ['id IN (?)', @questions.collect { |t| t.replied_by }.uniq]) unless @questions.blank?
       end
       format.xml { render :xml => @category }
     end

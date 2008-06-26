@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 class CategoryTest < Test::Unit::TestCase
   all_fixtures
 
-  def test_should_list_only_top_level_topics
-    assert_models_equal [topics(:sticky), topics(:il8n), topics(:ponies), topics(:pdi)], categories(:rails).topics
+  def test_should_list_only_top_level_questions
+    assert_models_equal [questions(:sticky), questions(:il8n), questions(:ponies), questions(:pdi)], categories(:rails).questions
   end
 
   def test_should_list_recent_posts
@@ -15,12 +15,12 @@ class CategoryTest < Test::Unit::TestCase
     assert_equal posts(:il8n), categories(:rails).recent_post
   end
 
-  def test_should_find_recent_topic
-    assert_equal topics(:il8n), categories(:rails).recent_topic
+  def test_should_find_recent_question
+    assert_equal questions(:il8n), categories(:rails).recent_question
   end
 
   def test_should_find_first_recent_post
-    assert_equal topics(:il8n), categories(:rails).recent_topic
+    assert_equal questions(:il8n), categories(:rails).recent_question
   end
 
   def test_should_format_body_html

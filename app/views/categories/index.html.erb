@@ -16,7 +16,7 @@
 <h1 style="margin-top:0;"><%= 'Categories'[:categories_title] %></h1>
 <p class="subtitle">
 <%= feed_icon_tag "Recent Posts"[:recent_posts], formatted_all_posts_path(:format => 'rss') %>
-<%= '{count} topic(s)'[(count=Topic.count)==1 ? :topic_count : :topics_count, number_with_delimiter(count)] %>, 
+<%= '{count} question(s)'[(count=Question.count)==1 ? :question_count : :questions_count, number_with_delimiter(count)] %>, 
 <%= '{count} post(s)'[(count=Post.count)==1 ? :post_count : :posts_count, number_with_delimiter(count)] %>, <%= '{count} voice(s)'[(count=User.count(:conditions => "posts_count > 0"))==1 ? :voice_count : :voices_count, number_with_delimiter(count)] %>
   
 </p>
@@ -25,7 +25,7 @@
   <tr>
     <th class="la" width="70%" colspan="3"><%= 'Category'[:category_title] %></th>
 <!--
-    <th width="5%">Topics</th>
+    <th width="5%">Questions</th>
     <th width="5%">Posts</th>
 -->
     <th class="la" width="30%" colspan="1"><%= 'Last Post'[:last_post] %></th>
@@ -43,7 +43,7 @@
     <td class="c2 vat">
       <%= link_to h(category.name), category_path(category), :class => "title" %>
       <div class="posts">
-        <%= '{count} topics'[(count=category.topics.size)==1 ? :topic_count : :topics_count, number_with_delimiter(count)] %>, 
+        <%= '{count} questions'[(count=category.questions.size)==1 ? :question_count : :questions_count, number_with_delimiter(count)] %>, 
         <%= '{count} posts'[(count=category.posts.size)==1 ? :post_count : :posts_count, number_with_delimiter(count)] %>
       </div>
       <p class="desc"><%= category.description_html %>
@@ -57,7 +57,7 @@
       <% if category.recent_post %>
         <%= time_ago_in_words(category.recent_post.created_at) %><br />
         <%= 'by {user}'[:by_user,"<strong>#{h(category.recent_post.user.display_name)}</strong>"] %>
-        <span>(<%= link_to 'view'[], topic_path(:category_id => category, :id => category.recent_post.topic_id, :page => category.recent_post.topic.last_page, :anchor => category.recent_post.dom_id) %>)</span>
+        <span>(<%= link_to 'view'[], question_path(:category_id => category, :id => category.recent_post.question_id, :page => category.recent_post.question.last_page, :anchor => category.recent_post.dom_id) %>)</span>
       <% end %>
     </td>
   </tr>

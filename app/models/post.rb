@@ -3,14 +3,14 @@ class Post < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :user
-  belongs_to :topic
+  belongs_to :question
 
   format_attribute :body
-  before_create { |r| r.category_id = r.topic.category_id }
+  before_create { |r| r.category_id = r.question.category_id }
   after_create  :update_cached_fields
   after_destroy :update_cached_fields
 
-  validates_presence_of :user_id, :body, :topic
+  validates_presence_of :user_id, :body, :question
   attr_accessible :body
   
   def editable_by?(user)
@@ -19,7 +19,7 @@ class Post < ActiveRecord::Base
   
   def to_xml(options = {})
     options[:except] ||= []
-    options[:except] << :topic_title << :category_name
+    options[:except] << :question_title << :category_name
     super
   end
   
@@ -28,6 +28,6 @@ class Post < ActiveRecord::Base
     def update_cached_fields
       Category.update_all ['posts_count = ?', Post.count(:id, :conditions => {:category_id => category_id})], ['id = ?', category_id]
       User.update_posts_count(user_id)
-      topic.update_cached_post_fields(self)
+      question.update_cached_post_fields(self)
     end
 end
