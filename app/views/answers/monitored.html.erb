@@ -1,0 +1,56 @@
+<% @page_title = "Answers that {user} is monitoring"[:answers_user_is_monitoring, h(@user.display_name)] -%>
+
+<% content_for :right do %>
+
+<h4><%= "{name}'s Monitored Questions"[:users_monitored_questions, link_to(h(@user.display_name), user_path(@user))] %></h4>
+<ul class="flat">
+<% @user.monitored_questions.find(:all, :limit => 25).each do |question| %>
+  <li><%= link_to question.title, question_path(question.category_id, question) %></li>
+<% end %>
+</ul>
+
+<% end -%>
+
+<h1><%= @page_title %></h1>
+<p class="subtitle">
+  <%= feed_icon_tag @page_title, formatted_monitored_answers_path(:user_id => @user, :format => 'rss') %>
+  <%= '{count} answer(s) found'[(count=@answers.total_entries)==1 ? :answer_count_found : :answers_count_found, number_with_delimiter(count)] %>
+</p>
+
+<%= pagination @answers %>
+
+<table border="0" cellspacing="0" cellpadding="0" class="answers wide">
+<% for answer in @answers do %>
+<% unless answer == @answers.first %>
+<tr class="spacer">
+  <td colspan="2">&nbsp;</td>
+</tr>
+<% end %>
+<tr class="answer hentry" id="<%= dom_id answer %>">
+  <td class="author vcard">
+    <div class="date">
+      <abbr class="updated" title="<%= answer.created_at.xmlschema %>">
+      <% if answer.created_at > Time.now.utc-24.hours%>
+      <%= time_ago_in_words(answer.created_at).sub(/about /, '') %>
+      <% else %>
+      <%= answer.created_at.strftime("%b %e, %Y"[:date_format])%>
+      <% end %>
+      </abbr>
+    </div>
+
+    <%= avatar_for answer.user %>
+    <span class="fn"><%= link_to truncate(h(answer.user.display_name), 15), user_path(answer.user), :class => (answer.user == @answers.first.user ? "admin" : nil) %></span>
+    <span class="answers"><%= '{count} answer(s)'[(count=answer.user.answers.size)==1 ? :answer_count : :answers_count, number_with_delimiter(count)] %></span>
+  </td>
+  <td class="body entry-content">
+    <p class="question"><%= 'Question'[:question_title] %>: <%= link_to h(answer.question_title), question_path(answer.category_id, answer.question_id) %></p>
+    
+    <%= answer.body_html %>
+  </td>
+</tr>
+
+<% end %>
+</table>
+
+<%= next_page @answers %>
+<%= pagination @answers %>

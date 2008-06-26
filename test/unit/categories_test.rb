@@ -7,19 +7,19 @@ class CategoryTest < Test::Unit::TestCase
     assert_models_equal [questions(:sticky), questions(:il8n), questions(:ponies), questions(:pdi)], categories(:rails).questions
   end
 
-  def test_should_list_recent_posts
-    assert_models_equal [posts(:il8n), posts(:ponies), posts(:pdi_rebuttal), posts(:pdi_reply), posts(:pdi),posts(:sticky) ], categories(:rails).posts
+  def test_should_list_recent_answers
+    assert_models_equal [answers(:il8n), answers(:ponies), answers(:pdi_rebuttal), answers(:pdi_reply), answers(:pdi),answers(:sticky) ], categories(:rails).answers
   end
 
-  def test_should_find_recent_post
-    assert_equal posts(:il8n), categories(:rails).recent_post
+  def test_should_find_recent_answer
+    assert_equal answers(:il8n), categories(:rails).recent_answer
   end
 
   def test_should_find_recent_question
     assert_equal questions(:il8n), categories(:rails).recent_question
   end
 
-  def test_should_find_first_recent_post
+  def test_should_find_first_recent_answer
     assert_equal questions(:il8n), categories(:rails).recent_question
   end
 

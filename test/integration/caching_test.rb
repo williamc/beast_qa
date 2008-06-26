@@ -15,27 +15,27 @@ class CachingTest < ActionController::IntegrationTest
   # These are not passing with autotest right now. Don't have time to look into it
   # but it needs to be fixed.
   #
-  # def test_should_cache_posts_rss
-  #   assert_cached "posts.rss" do
-  #     get formatted_all_posts_path(:rss)
+  # def test_should_cache_answers_rss
+  #   assert_cached "answers.rss" do
+  #     get formatted_all_answers_path(:rss)
   #   end
   # end
   # 
-  # def test_should_cache_category_posts_rss
-  #   assert_cached "categories/1/posts.rss" do
-  #     get formatted_category_posts_path(1, :rss)
+  # def test_should_cache_category_answers_rss
+  #   assert_cached "categories/1/answers.rss" do
+  #     get formatted_category_answers_path(1, :rss)
   #   end
   # end
   # 
-  # def test_should_cache_question_posts_rss
-  #   assert_cached "categories/1/questions/1/posts.rss" do
-  #     get formatted_posts_path(1, 1, :rss)
+  # def test_should_cache_question_answers_rss
+  #   assert_cached "categories/1/questions/1/answers.rss" do
+  #     get formatted_answers_path(1, 1, :rss)
   #   end
   # end
   # 
-  # def test_should_cache_monitored_posts
+  # def test_should_cache_monitored_answers
   #   assert_cached "users/1/monitored.rss" do
-  #     get formatted_monitored_posts_path(1, :rss)
+  #     get formatted_monitored_answers_path(1, :rss)
   #   end
   # end
   # 

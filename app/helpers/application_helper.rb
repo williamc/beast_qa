@@ -24,8 +24,8 @@ module ApplicationHelper
     link_to image_tag('feed-icon.png', :size => '14x14', :alt => "Subscribe to #{title}"), url
   end
 
-  def search_posts_title
-    returning(params[:q].blank? ? 'Recent Posts'[] : "Searching for"[] + " '#{h params[:q]}'") do |title|
+  def search_answers_title
+    returning(params[:q].blank? ? 'Recent Answers'[] : "Searching for"[] + " '#{h params[:q]}'") do |title|
       title << " "+'by {user}'[:by_user,h(User.find(params[:user_id]).display_name)] if params[:user_id]
       title << " "+'in {category}'[:in_category,h(Category.find(params[:category_id]).name)] if params[:category_id]
     end
@@ -40,14 +40,14 @@ module ApplicationHelper
     end
   end
 
-  def search_posts_path(rss = false)
+  def search_answers_path(rss = false)
     options = params[:q].blank? ? {} : {:q => params[:q]}
     prefix = rss ? 'formatted_' : ''
     options[:format] = 'rss' if rss
     [[:user, :user_id], [:category, :category_id]].each do |(route_key, param_key)|
-      return send("#{prefix}#{route_key}_posts_path", options.update(param_key => params[param_key])) if params[param_key]
+      return send("#{prefix}#{route_key}_answers_path", options.update(param_key => params[param_key])) if params[param_key]
     end
-    options[:q] ? search_all_posts_path(options) : send("#{prefix}all_posts_path", options)
+    options[:q] ? search_all_answers_path(options) : send("#{prefix}all_answers_path", options)
   end
 
   # on windows and this isn't working like you expect?

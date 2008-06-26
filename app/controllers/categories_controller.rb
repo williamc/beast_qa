@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   before_filter :login_required, :except => [:index, :show]
   before_filter :find_or_initialize_category, :except => :index
 
-  cache_sweeper :posts_sweeper, :only => [:create, :update, :destroy]
+  cache_sweeper :answers_sweeper, :only => [:create, :update, :destroy]
 
   def index
     @categories = Category.find_ordered

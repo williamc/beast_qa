@@ -1,0 +1,13 @@
+<h1><%= 'Edit Answer'[] %></h1>
+
+<h2><%= link_to h(@answer.question.title), question_path(@answer.category_id, @answer.question) %></h2>
+
+<%= link_to('Delete answer'[], answer_path(:category_id => @answer.category_id, :question_id => @answer.question, :id => @answer, :page => params[:page]), 
+      :class => "utility", :method => :delete, :confirm => 'Delete this answer forever?'[:delete_answer_conf]) %>
+
+<%= error_messages_for :question %>
+<% form_for :answer, :html => { :method => :put }, 
+     :url  => answer_path(:category_id => params[:category_id], :id => params[:question_id], :id => @answer, :page => params[:page]) do |f| -%>
+<p id="answer_body"><%= f.text_area :body %></p>
+<%= submit_tag 'Save'[:save_title] %> or <%= link_to 'cancel'[], question_path(:category_id => params[:category_id], :id => params[:question_id], :page => params[:page]) %>
+<% end -%>

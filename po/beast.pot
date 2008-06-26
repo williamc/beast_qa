@@ -33,7 +33,7 @@ msgid "Category|Questions count"
 msgstr ""
 
 #: app/models/category.rb:-
-msgid "Category|Posts count"
+msgid "Category|Answers count"
 msgstr ""
 
 #: app/models/category.rb:-
@@ -60,32 +60,32 @@ msgstr ""
 msgid "monitorship"
 msgstr ""
 
-#: app/models/post.rb:- app/views/categories/show.rhtml:34
-msgid "post"
+#: app/models/answer.rb:- app/views/categories/show.rhtml:34
+msgid "answer"
 msgstr ""
 
-#: app/models/post.rb:-
-msgid "Post|User"
+#: app/models/answer.rb:-
+msgid "Answer|User"
 msgstr ""
 
-#: app/models/post.rb:-
-msgid "Post|Question"
+#: app/models/answer.rb:-
+msgid "Answer|Question"
 msgstr ""
 
-#: app/models/post.rb:-
-msgid "Post|Body"
+#: app/models/answer.rb:-
+msgid "Answer|Body"
 msgstr ""
 
-#: app/models/post.rb:-
-msgid "Post|Created at"
+#: app/models/answer.rb:-
+msgid "Answer|Created at"
 msgstr ""
 
-#: app/models/post.rb:-
-msgid "Post|Updated at"
+#: app/models/answer.rb:-
+msgid "Answer|Updated at"
 msgstr ""
 
-#: app/models/post.rb:-
-msgid "Post|Category"
+#: app/models/answer.rb:-
+msgid "Answer|Category"
 msgstr ""
 
 #: app/models/question.rb:- app/views/categories/show.rhtml:34
@@ -122,7 +122,7 @@ msgid "Question|Sticky"
 msgstr ""
 
 #: app/models/question.rb:-
-msgid "Question|Posts count"
+msgid "Question|Answers count"
 msgstr ""
 
 #: app/models/question.rb:-
@@ -138,7 +138,7 @@ msgid "Question|Replied by"
 msgstr ""
 
 #: app/models/question.rb:-
-msgid "Question|Last post"
+msgid "Question|Last answer"
 msgstr ""
 
 #: app/models/user.rb:-
@@ -170,7 +170,7 @@ msgid "User|Admin"
 msgstr ""
 
 #: app/models/user.rb:-
-msgid "User|Posts count"
+msgid "User|Answers count"
 msgstr ""
 
 #: app/models/user.rb:-
@@ -267,7 +267,7 @@ msgid "Create New Category"
 msgstr ""
 
 #: app/views/categories/index.rhtml:18
-msgid "Recent Posts"
+msgid "Recent Answers"
 msgstr ""
 
 #: app/views/categories/index.rhtml:19 app/views/categories/index.rhtml:48
@@ -276,7 +276,7 @@ msgstr ""
 
 #: app/views/categories/index.rhtml:19 app/views/categories/index.rhtml:49
 #: app/views/users/show.rhtml:47
-msgid "posts"
+msgid "answers"
 msgstr ""
 
 #: app/views/categories/index.rhtml:20
@@ -288,7 +288,7 @@ msgid "Category"
 msgstr ""
 
 #: app/views/categories/index.rhtml:31
-msgid "Last Post"
+msgid "Last Answer"
 msgstr ""
 
 #: app/views/categories/index.rhtml:38
@@ -304,7 +304,7 @@ msgid "Edit"
 msgstr ""
 
 #: app/views/categories/index.rhtml:71
-msgid "Recent posts"
+msgid "Recent answers"
 msgstr ""
 
 #: app/views/categories/index.rhtml:79
@@ -332,8 +332,8 @@ msgid "Please always be courteous."
 msgstr ""
 
 #: app/views/categories/show.rhtml:43 app/views/categories/show.rhtml:95
-#: app/views/posts/index.rhtml:16 app/views/posts/index.rhtml:60
-#: app/views/posts/monitored.rhtml:21 app/views/posts/monitored.rhtml:62
+#: app/views/answers/index.rhtml:16 app/views/answers/index.rhtml:60
+#: app/views/answers/monitored.rhtml:21 app/views/answers/monitored.rhtml:62
 #: app/views/questions/show.rhtml:59 app/views/users/index.rhtml:19
 #: app/views/users/index.rhtml:51
 msgid "Pages:"
@@ -344,7 +344,7 @@ msgid "Question"
 msgstr ""
 
 #: app/views/categories/show.rhtml:49 app/views/users/index.rhtml:26
-msgid "Posts"
+msgid "Answers"
 msgstr ""
 
 #: app/views/categories/show.rhtml:50
@@ -352,11 +352,11 @@ msgid "Views"
 msgstr ""
 
 #: app/views/categories/show.rhtml:51
-msgid "Last post"
+msgid "Last answer"
 msgstr ""
 
-#: app/views/categories/show.rhtml:91 app/views/posts/index.rhtml:56
-#: app/views/posts/monitored.rhtml:58 app/views/users/index.rhtml:47
+#: app/views/categories/show.rhtml:91 app/views/answers/index.rhtml:56
+#: app/views/answers/monitored.rhtml:58 app/views/users/index.rhtml:47
 msgid "Next page"
 msgstr ""
 
@@ -394,69 +394,69 @@ msgstr ""
 msgid "and"
 msgstr ""
 
-#: app/views/posts/_edit.rhtml:13
-msgid "delete post"
+#: app/views/answers/_edit.rhtml:13
+msgid "delete answer"
 msgstr ""
 
-#: app/views/posts/_edit.rhtml:17 app/views/questions/show.rhtml:144
+#: app/views/answers/_edit.rhtml:17 app/views/questions/show.rhtml:144
 msgid "Formatting Help"
 msgstr ""
 
-#: app/views/posts/_edit.rhtml:20 app/views/questions/show.rhtml:147
+#: app/views/answers/_edit.rhtml:20 app/views/questions/show.rhtml:147
 msgid "*bold*"
 msgstr ""
 
-#: app/views/posts/_edit.rhtml:21 app/views/questions/show.rhtml:149
+#: app/views/answers/_edit.rhtml:21 app/views/questions/show.rhtml:149
 msgid "_italics_"
 msgstr ""
 
-#: app/views/posts/_edit.rhtml:22 app/views/questions/show.rhtml:151
+#: app/views/answers/_edit.rhtml:22 app/views/questions/show.rhtml:151
 msgid "bq. <span>(quotes)</span>"
 msgstr ""
 
-#: app/views/posts/_edit.rhtml:24 app/views/questions/show.rhtml:153
+#: app/views/answers/_edit.rhtml:24 app/views/questions/show.rhtml:153
 msgid "* or # <span>(lists)</span>"
 msgstr ""
 
-#: app/views/posts/_edit.rhtml:32 app/views/questions/edit.rhtml:9
+#: app/views/answers/_edit.rhtml:32 app/views/questions/edit.rhtml:9
 msgid "Save Changes"
 msgstr ""
 
-#: app/views/posts/_edit.rhtml:32 app/views/posts/edit.rhtml:12
+#: app/views/answers/_edit.rhtml:32 app/views/answers/edit.rhtml:12
 #: app/views/sessions/new.rhtml:28 app/views/questions/show.rhtml:160
 #: app/views/users/edit.rhtml:22 app/views/users/edit.rhtml:30
 msgid "cancel"
 msgstr ""
 
-#: app/views/posts/edit.rhtml:1
-msgid "Edit Post"
+#: app/views/answers/edit.rhtml:1
+msgid "Edit Answer"
 msgstr ""
 
-#: app/views/posts/edit.rhtml:5
-msgid "Delete post"
+#: app/views/answers/edit.rhtml:5
+msgid "Delete answer"
 msgstr ""
 
-#: app/views/posts/edit.rhtml:6
-msgid "Delete this post forever?"
+#: app/views/answers/edit.rhtml:6
+msgid "Delete this answer forever?"
 msgstr ""
 
-#: app/views/posts/edit.rhtml:12
+#: app/views/answers/edit.rhtml:12
 msgid "Save"
 msgstr ""
 
-#: app/views/posts/index.rhtml:7
+#: app/views/answers/index.rhtml:7
 msgid "Searching for"
 msgstr ""
 
-#: app/views/posts/monitored.rhtml:5
+#: app/views/answers/monitored.rhtml:5
 msgid "s Monitored Questions"
 msgstr ""
 
-#: app/views/posts/monitored.rhtml:17
+#: app/views/answers/monitored.rhtml:17
 msgid "found"
 msgstr ""
 
-#: app/views/posts/monitored.rhtml:48
+#: app/views/answers/monitored.rhtml:48
 msgid "Question:"
 msgstr ""
 
@@ -512,7 +512,7 @@ msgid "by"
 msgstr ""
 
 #: app/views/questions/new.rhtml:13
-msgid "Post Question"
+msgid "Answer Question"
 msgstr ""
 
 #: app/views/questions/show.rhtml:6
@@ -536,7 +536,7 @@ msgid "Delete this question forever?"
 msgstr ""
 
 #: app/views/questions/show.rhtml:91
-msgid "Edit post"
+msgid "Edit answer"
 msgstr ""
 
 #: app/views/questions/show.rhtml:126

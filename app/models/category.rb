@@ -14,8 +14,8 @@ class Category < ActiveRecord::Base
   has_many :recent_questions, :class_name => 'Question', :order => 'replied_at DESC'
   has_one  :recent_question,  :class_name => 'Question', :order => 'replied_at DESC'
 
-  has_many :posts,     :order => "#{Post.table_name}.created_at DESC", :dependent => :delete_all
-  has_one  :recent_post, :order => "#{Post.table_name}.created_at DESC", :class_name => 'Post'
+  has_many :answers,     :order => "#{Answer.table_name}.created_at DESC", :dependent => :delete_all
+  has_one  :recent_answer, :order => "#{Answer.table_name}.created_at DESC", :class_name => 'Answer'
 
   format_attribute :description
   

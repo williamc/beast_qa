@@ -1,0 +1,3 @@
+page.edit_form.cancel
+page.replace_html "answer-body-#{@answer.id}", @answer.body_html
+page.visual_effect :highlight, "answer-body-#{@answer.id}", :duration => 1.5

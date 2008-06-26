@@ -4,10 +4,10 @@ sqlite:
 sqlite3:
   :adapter: sqlite3
   :dbfile: active_record_context_plugin.sqlite3.db
-postgresql:
-  :adapter: postgresql
-  :username: postgres
-  :password: postgres
+answergresql:
+  :adapter: answergresql
+  :username: answergres
+  :password: answergres
   :database: active_record_context_plugin_test
   :min_messages: ERROR
 mysql:

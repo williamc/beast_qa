@@ -1,5 +1,5 @@
 class CreateQuestions < ActiveRecord::Migration
-  class Post < ActiveRecord::Base; end
+  class Answer < ActiveRecord::Base; end
   class Question < ActiveRecord::Base; end
   def self.up
     create_table :questions do |t|
@@ -10,11 +10,11 @@ class CreateQuestions < ActiveRecord::Migration
       t.column "updated_at",  :datetime
       t.column "hits",        :integer,  :default => 0
       t.column "sticky",      :boolean,  :default => false
-      t.column "posts_count", :integer,  :default => 0
+      t.column "answers_count", :integer,  :default => 0
       t.column "replied_at",  :datetime
     end
     # find the old questions
-    Post.find(:all, :conditions => "id=question_id").each do |old_question|
+    Answer.find(:all, :conditions => "id=question_id").each do |old_question|
       question=Question.new
       question.id=old_question.id
       question.attribute_names.each do |prop|

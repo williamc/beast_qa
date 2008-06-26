@@ -39,12 +39,12 @@
 <h1><%=h @user.display_name %> </h1>
 
 <p class="subtitle">
-  <%= feed_icon_tag @user.display_name, formatted_user_posts_path(:user_id => @user, :format => :rss) %>
+  <%= feed_icon_tag @user.display_name, formatted_user_answers_path(:user_id => @user, :format => :rss) %>
   <span>
     <%= '{count} questions'[(count=@user.questions.size)==1 ? :question_count : :questions_count, number_with_delimiter(count)] %>, 
-    <%= '{count} posts'[(count=@user.posts.size)==1 ? :post_count : :posts_count, number_with_delimiter(count)] %>
-    (<%= 'view'[] %> <%= link_to 'all'[:view_all], user_posts_path(@user) %> | 
-    <%= link_to 'monitored'[], monitored_posts_path(@user) %> <%= 'posts'[] %>)<br />
+    <%= '{count} answers'[(count=@user.answers.size)==1 ? :answer_count : :answers_count, number_with_delimiter(count)] %>
+    (<%= 'view'[] %> <%= link_to 'all'[:view_all], user_answers_path(@user) %> | 
+    <%= link_to 'monitored'[], monitored_answers_path(@user) %> <%= 'answers'[] %>)<br />
   </span>
 </p>
 

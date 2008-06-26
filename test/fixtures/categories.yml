@@ -2,11 +2,11 @@ rails:
   id: 1
   name: rails
   questions_count: 4
-  posts_count: 6
+  answers_count: 6
   position: 2
 comics:
   id: 2
   name: comics
   questions_count: 2
-  posts_count: 4
+  answers_count: 4
   position: 1

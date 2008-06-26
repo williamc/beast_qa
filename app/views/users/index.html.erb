@@ -21,7 +21,7 @@
   <tr>
     <th class="la" width="88%"><%= 'Name / Login'[:name_or_login] %></th>
     <th><%= 'Website'[:website_title] %></th>
-    <th width="1%"><%= 'Posts'[:posts_title] %></th>
+    <th width="1%"><%= 'Answers'[:answers_title] %></th>
   </tr>
 <% @users.each do |user|-%>  
   <tr>
@@ -35,7 +35,7 @@
       <%= white_list link_to(user.website.gsub("http://",""), "http://" + user.website.gsub("http://","")) %>
       <% end %>
     </td>
-    <td class="ca inv"><%= user.posts.size %></td>
+    <td class="ca inv"><%= user.answers.size %></td>
   </tr>
 <% end %>
 </table>

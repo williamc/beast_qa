@@ -11,11 +11,25 @@
 
 ActiveRecord::Schema.define(:version => 53) do
 
+  create_table "answers", :force => true do |t|
+    t.integer  "user_id",     :limit => 11
+    t.integer  "question_id", :limit => 11
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "category_id", :limit => 11
+    t.text     "body_html"
+  end
+
+  add_index "answers", ["category_id", "created_at"], :name => "index_answers_on_category_id"
+  add_index "answers", ["user_id", "created_at"], :name => "index_answers_on_user_id"
+  add_index "answers", ["question_id", "created_at"], :name => "index_answers_on_question_id"
+
   create_table "categories", :force => true do |t|
     t.string  "name"
     t.string  "description"
     t.integer "questions_count",  :limit => 11, :default => 0
-    t.integer "posts_count",      :limit => 11, :default => 0
+    t.integer "answers_count",    :limit => 11, :default => 0
     t.integer "position",         :limit => 11
     t.text    "description_html"
   end
@@ -78,18 +92,18 @@ ActiveRecord::Schema.define(:version => 53) do
   add_index "posts", ["question_id", "created_at"], :name => "index_posts_on_question_id"
 
   create_table "questions", :force => true do |t|
-    t.integer  "category_id",  :limit => 11
-    t.integer  "user_id",      :limit => 11
+    t.integer  "category_id",    :limit => 11
+    t.integer  "user_id",        :limit => 11
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "hits",         :limit => 11, :default => 0
-    t.integer  "sticky",       :limit => 11, :default => 0
-    t.integer  "posts_count",  :limit => 11, :default => 0
+    t.integer  "hits",           :limit => 11, :default => 0
+    t.integer  "sticky",         :limit => 11, :default => 0
+    t.integer  "answers_count",  :limit => 11, :default => 0
     t.datetime "replied_at"
-    t.boolean  "locked",                     :default => false
-    t.integer  "replied_by",   :limit => 11
-    t.integer  "last_post_id", :limit => 11
+    t.boolean  "locked",                       :default => false
+    t.integer  "replied_by",     :limit => 11
+    t.integer  "last_answer_id", :limit => 11
   end
 
   add_index "questions", ["category_id"], :name => "index_questions_on_category_id"
@@ -131,7 +145,7 @@ ActiveRecord::Schema.define(:version => 53) do
     t.datetime "created_at"
     t.datetime "last_login_at"
     t.boolean  "admin"
-    t.integer  "posts_count",          :limit => 11, :default => 0
+    t.integer  "answers_count",        :limit => 11, :default => 0
     t.datetime "last_seen_at"
     t.string   "display_name"
     t.datetime "updated_at"
@@ -145,6 +159,6 @@ ActiveRecord::Schema.define(:version => 53) do
   end
 
   add_index "users", ["last_seen_at"], :name => "index_users_on_last_seen_at"
-  add_index "users", ["posts_count"], :name => "index_users_on_posts_count"
+  add_index "users", ["answers_count"], :name => "index_users_on_answers_count"
 
 end

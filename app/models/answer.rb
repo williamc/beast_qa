@@ -1,4 +1,4 @@
-class Post < ActiveRecord::Base
+class Answer < ActiveRecord::Base
   def self.per_page() 25 end
 
   belongs_to :category
@@ -26,8 +26,8 @@ class Post < ActiveRecord::Base
   protected
     # using count isn't ideal but it gives us correct caches each time
     def update_cached_fields
-      Category.update_all ['posts_count = ?', Post.count(:id, :conditions => {:category_id => category_id})], ['id = ?', category_id]
-      User.update_posts_count(user_id)
-      question.update_cached_post_fields(self)
+      Category.update_all ['answers_count = ?', Answer.count(:id, :conditions => {:category_id => category_id})], ['id = ?', category_id]
+      User.update_answers_count(user_id)
+      question.update_cached_answer_fields(self)
     end
 end

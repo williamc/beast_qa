@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration
       t.column :created_at, :datetime
       t.column :last_login_at, :datetime
       t.column :admin, :boolean
-      t.column :posts_count, :integer, :default => 0
+      t.column :answers_count, :integer, :default => 0
     end
   end
 

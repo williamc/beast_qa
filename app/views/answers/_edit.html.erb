@@ -1,17 +1,17 @@
 <div id="edit" class="editbox">
 <div class="container">
-  <% remote_form_for :post, :url => post_path(:category_id => @post.category_id, :question_id => @post.question_id, :id => @post), 
+  <% remote_form_for :answer, :url => answer_path(:category_id => @answer.category_id, :question_id => @answer.question_id, :id => @answer), 
     :html => { :method => :put }, :before => "$('editbox_spinner').show();" do |f| -%>
 
   <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <td rowspan="2" width="70%">
-        <%= f.text_area :body, :rows => 10, :id => "edit_post_body", :tabindex => 1 %>
+        <%= f.text_area :body, :rows => 10, :id => "edit_answer_body", :tabindex => 1 %>
       </td>
       <td valign="top">
 
-        <%= link_to('delete post'[], post_path(:category_id => @post.question.category, :question_id => @post.question, :id => @post, :page => params[:page]), 
-              :class => "utility", :method => :delete, :confirm => "Delete this post?  Are you sure?"[:delete_post_conf]) %>  
+        <%= link_to('delete answer'[], answer_path(:category_id => @answer.question.category, :question_id => @answer.question, :id => @answer, :page => params[:page]), 
+              :class => "utility", :method => :delete, :confirm => "Delete this answer?  Are you sure?"[:delete_answer_conf]) %>  
 
 
         <h5><%= 'Formatting Help'[] %></h5>

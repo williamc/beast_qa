@@ -17,21 +17,21 @@ question_title: Question
 Questions_title: Questions
 edit_question: Edit question
 new_question: New question
-question_posted_by: "{title} posted by {user} @ {date}"
+question_answered_by: "{title} answered by {user} @ {date}"
 question_replied_by: "{title} replied by {user} @ {date}"
 locked_question: This question is locked
 monitoring_question: Monitoring question
 monitor_question: Monitor question
-post_question: Post question
+answer_question: Answer question
 reply_to_question: Reply to question
 save_reply: Save Reply
 
-post_title: Post
-posts_title: Posts
-edit_post: Edit post
-delete_post: Delete post
-last_post: Last Post
-recent_posts: Recent Posts
+answer_title: Answer
+answers_title: Answers
+edit_answer: Edit answer
+delete_answer: Delete answer
+last_answer: Last Answer
+recent_answers: Recent Answers
 
 voices_title: Voices
 monitor_title: Monitor
@@ -61,9 +61,9 @@ next_page: Next Page
 next: "Next &raquo;"
 previous: "&laquo; Previous"
 questions_count: "{count} question(s)"
-posts_count: "{count} post(s)"
+answers_count: "{count} answer(s)"
 voices_count: "{count} voice(s)"
-posts_count_found: "{count} post(s) found"
+answers_count_found: "{count} answer(s) found"
 cancel: cancel
 page: "page {page}"
 
@@ -141,11 +141,11 @@ hours_ago: "{hours} hours ago"
 days_ago: "{days} days ago"
 
 questions: questions
-posts: posts
+answers: answers
 question_count: "{count} question"
-post_count: "{count} post"
+answer_count: "{count} answer"
 voice_count: "{count} voice"
-post_count_found: "{count} post found"
+answer_count_found: "{count} answer found"
 
 comma_locked_question: ", this question is locked."
 
@@ -157,18 +157,18 @@ moderator_title: Moderator
 
 question_locked_title: Question locked
 
-recent_posts_in_question: "Recent Posts in '{question}' | Beast"
+recent_answers_in_question: "Recent Answers in '{question}' | Beast"
 
-delete_post_conf: "Delete this post?  Are you sure?"
+delete_answer_conf: "Delete this answer?  Are you sure?"
 delete_question_conf: "Delete this question?  Are you sure?"
 
 date_format: "%b %e, %Y"
 datetime_format: "%b %e, %Y  %l:%M%p"
 
-posts_feed_title: "{search_posts_title} | Beast"
+answers_feed_title: "{search_answers_title} | Beast"
 
 feed_language: en-us
-posts_user_is_monitoring: "Posts that {user} is monitoring"
+answers_user_is_monitoring: "Answers that {user} is monitoring"
 
 view_all: all
 
@@ -179,9 +179,9 @@ signup_action: Signup
 login_action: Login
 
 check_email_message: "Please check the e-mail address"
-post_something_message: "Please post something at least..."
+answer_something_message: "Please answer something at least..."
 error_occured_message: "An error occurred"
-post_deleted_message: "Post of '{title}' was deleted."
+answer_deleted_message: "Answer of '{title}' was deleted."
 logged_out_message: "You have been logged out."
 openid_not_found_message: "Sorry, the OpenID server couldn't be found"
 openid_canceled_message: "OpenID verification was canceled"

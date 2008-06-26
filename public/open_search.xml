@@ -3,8 +3,8 @@
  <ShortName>Beast Category Search</ShortName>
  <Tags>beast</Tags>
  <Contact>admin@example.com</Contact>
- <Url type="application/rss+xml" template="http://beast.caboo.se/posts?q={searchTerms}&amp;page={startPage}&amp;format=rss" />
- <Url type="text/html" template="http://beast.caboo.se/posts?q={searchTerms}&amp;page={startPage}" />
+ <Url type="application/rss+xml" template="http://beast.caboo.se/answers?q={searchTerms}&amp;page={startPage}&amp;format=rss" />
+ <Url type="text/html" template="http://beast.caboo.se/answers?q={searchTerms}&amp;page={startPage}" />
  <Query role="example" searchTerms="cat" />
  <Developer>Beast Development Team</Developer>
  <SyndicationRight>open</SyndicationRight>

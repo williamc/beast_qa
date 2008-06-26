@@ -1,10 +1,10 @@
-class UpdateUserPostCounts < ActiveRecord::Migration
+class UpdateUserAnswerCounts < ActiveRecord::Migration
   def self.up
-    # old and not needed, we only need to know post count
+    # old and not needed, we only need to know answer count
     remove_column "users", "questions_count"
     # because i think the counts have been off
     User.find(:all).each do | i |
-      i.posts_count=i.posts.count
+      i.answers_count=i.answers.count
       i.save
     end
   end

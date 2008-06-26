@@ -7,7 +7,7 @@ class UsersController < ApplicationController
       format.html do
         @users      = User.paginate :page => params[:page], :order => "display_name", :conditions => User.build_search_conditions(params[:q])
         @user_count = @users.total_entries
-        @active     = User.count(:id, :conditions => "posts_count > 0")
+        @active     = User.count(:id, :conditions => "answers_count > 0")
       end
       format.xml do
         @users = User.search(params[:q])

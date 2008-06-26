@@ -4,7 +4,7 @@ aaron:
   email: aaron@email.com
   password_hash: 4c426caff6b43918711cc94d7a0044bb60eee108 # testy
   created_at: <%= 5.days.ago.to_s :db %>
-  posts_count: 5
+  answers_count: 5
   last_login_at: <%= 5.minutes.ago.to_s :db %>
   last_seen_at: <%= 5.minutes.ago.to_s :db %>
   activated: true
@@ -17,7 +17,7 @@ sam:
   email: sam@email.com
   password_hash: 4c426caff6b43918711cc94d7a0044bb60eee108 # testy
   created_at: <%= 4.days.ago.to_s :db %>
-  posts_count: 5
+  answers_count: 5
   last_login_at: <%= 4.minutes.ago.to_s :db %>
   last_seen_at: <%= 4.minutes.ago.to_s :db %>
   activated: true
@@ -30,7 +30,7 @@ joe:
   email: joe@email.com
   password_hash: 4c426caff6b43918711cc94d7a0044bb60eee108 # testy
   created_at: <%= 4.days.ago.to_s :db %>
-  posts_count: 2
+  answers_count: 2
   last_login_at: <%= 4.minutes.ago.to_s :db %>
   last_seen_at: <%= 4.minutes.ago.to_s :db %>
   activated: true
@@ -43,7 +43,7 @@ kyle:
   email: kyle@email.com
   password_hash: 4c426caff6b43918711cc94d7a0044bb60eee108 # testy
   created_at: <%= 3.days.ago.to_s :db %>
-  posts_count: 0
+  answers_count: 0
   activated: false
   login_key: 8305f94ab2b92f99137abbc235ee28e5c
   login_key_expires_at: <%= (Time.now.utc + 1.week).to_s :db %>

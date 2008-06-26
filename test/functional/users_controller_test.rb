@@ -158,16 +158,16 @@ class UsersControllerTest < Test::Unit::TestCase
   def test_should_only_update_safe_fields
     # non-admin should not be able to change all this stuff
     login_as :sam
-    put :update, :id => users(:sam).id, :user => { :login => "ruby", :created_at => "2005-10-24", :updated_at => "2004-10-24", :last_login_at => "2005-10-24", :last_seen_at => "2005-10-24", :posts_count => "1000", :admin => "1" }
+    put :update, :id => users(:sam).id, :user => { :login => "ruby", :created_at => "2005-10-24", :updated_at => "2004-10-24", :last_login_at => "2005-10-24", :last_seen_at => "2005-10-24", :answers_count => "1000", :admin => "1" }
     assert_redirected_to edit_user_path(assigns(:user))
     assert_equal users(:sam), assigns(:user)
-    [:created_at, :last_login_at, :posts_count, :admin].each do |attr|
+    [:created_at, :last_login_at, :answers_count, :admin].each do |attr|
       assert_equal users(:sam).send(attr), assigns(:user).send(attr), "#{attr}"
     end
     assert_not_equal 2004, users(:sam).reload.updated_at.year
     assert_not_equal 2005, users(:sam).last_seen_at
     assert_equal 'sam', users(:sam).login
-    assert_equal 5, users(:sam).posts_count
+    assert_equal 5, users(:sam).answers_count
     assert !users(:sam).admin?
   end
 

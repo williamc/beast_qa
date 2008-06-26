@@ -21,11 +21,11 @@ ActiveRecord::Base.send :include, Technoweenie::ActiveRecordContext
 class Question < ActiveRecord::Base
 end
 
-class Post < ActiveRecord::Base; end
-class NormalPost < Post
+class Answer < ActiveRecord::Base; end
+class NormalAnswer < Answer
   belongs_to :question
 end
 
-class PolymorphPost < Post
+class PolymorphAnswer < Answer
   belongs_to :question, :polymorphic => true
 end

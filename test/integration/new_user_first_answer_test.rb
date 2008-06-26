@@ -1,6 +1,6 @@
 require "#{File.dirname(__FILE__)}/../test_helper"
 
-class NewUserFirstPostTest < ActionController::IntegrationTest
+class NewUserFirstAnswerTest < ActionController::IntegrationTest
   all_fixtures
 
   ## PLEASE
@@ -9,7 +9,7 @@ class NewUserFirstPostTest < ActionController::IntegrationTest
   #
   # ha, fat chance of that happening!  -- rick
 
-  def test_signup_and_post_edit_and_question
+  def test_signup_and_answer_edit_and_question
     go_home
 
     get login_path
@@ -37,21 +37,21 @@ class NewUserFirstPostTest < ActionController::IntegrationTest
     # login("jgoebel","beast")
     
     review_question(questions(:pdi))    
-    first_post=add_reply(questions(:pdi), "I'm on it.")
-    click_edit_post(first_post)
+    first_answer=add_reply(questions(:pdi), "I'm on it.")
+    click_edit_answer(first_answer)
 
-    # update that post
-    post post_path(:category_id => categories(:rails), :question_id => questions(:pdi), :id => first_post), :post => { :body => "I change my mind, I'm scared."}, :_method => "put"
+    # update that answer
+    post answer_path(:category_id => categories(:rails), :question_id => questions(:pdi), :id => first_answer), :answer => { :body => "I change my mind, I'm scared."}, :_method => "put"
     assert_response :redirect
     follow_redirect!
     assert_template "questions/show"
-    assert_equal("I change my mind, I'm scared.", first_post.reload.body)
+    assert_equal("I change my mind, I'm scared.", first_answer.reload.body)
 
     # ponies
     review_question(questions(:ponies))
     add_reply(questions(:ponies), "Ponies are cool.")
     
-    # post new question
+    # answer new question
     post questions_path(:category_id => categories(:rails).id), :question => { :title => "Beast rocks!", :body => "I love beast!"}
     assert_response :redirect
     follow_redirect!
@@ -67,7 +67,7 @@ class NewUserFirstPostTest < ActionController::IntegrationTest
     assert_template "categories/index"
     
     josh=User.find_by_login "jgoebel"
-    assert_equal 3, josh.posts.count
+    assert_equal 3, josh.answers.count
   end
   
   private
@@ -79,22 +79,22 @@ class NewUserFirstPostTest < ActionController::IntegrationTest
       assert_template "categories/index"
     end
   
-    # adds a reply to a particular post
+    # adds a reply to a particular answer
     def add_reply(question,body)
-      post posts_path(question.category, question), :post => { :body => body }
+      post answers_path(question.category, question), :answer => { :body => body }
       assert_response :redirect
-      post = assigns(:post)
+      answer = assigns(:answer)
       follow_redirect!
       assert_response :success
       assert_template "questions/show"
-      post
+      answer
     end
     
-    # pulls up the edit form for a post
-    def click_edit_post(post)
-      get edit_post_path(post.question.category, post.question, post)
+    # pulls up the edit form for a answer
+    def click_edit_answer(answer)
+      get edit_answer_path(answer.question.category, answer.question, answer)
       assert_response :success
-      assert_template "posts/edit"
+      assert_template "answers/edit"
     end
     
     def login(user, password)
@@ -130,7 +130,7 @@ class NewUserFirstPostTest < ActionController::IntegrationTest
       get question_path(question.category, question)
       assert_response :success
       assert assigns(:question)
-      assert assigns(:posts)
+      assert assigns(:answers)
       assert_template "questions/show"
     end
 

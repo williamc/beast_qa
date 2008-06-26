@@ -594,7 +594,7 @@ Ajax.InPlaceEditor = Class.create({
     this.createForm();
     this.element.parentNode.insertBefore(this._form, this.element);
     if (!this.options.loadTextURL)
-      this.postProcessEditField();
+      this.answerProcessEditField();
     if (e) Event.stop(e);
   },
   enterHover: function(e) {
@@ -677,14 +677,14 @@ Ajax.InPlaceEditor = Class.create({
           text = text.stripTags();
         this._controls.editor.value = text;
         this._controls.editor.disabled = false;
-        this.postProcessEditField();
+        this.answerProcessEditField();
       }.bind(this),
       onFailure: this._boundFailureHandler
     });
     new Ajax.Request(this.options.loadTextURL, options);
   },
-  postProcessEditField: function() {
-    var fpc = this.options.fieldPostCreation;
+  answerProcessEditField: function() {
+    var fpc = this.options.fieldAnswerCreation;
     if (fpc)
       $(this._controls.editor)['focus' == fpc ? 'focus' : 'activate']();
   },
@@ -875,7 +875,7 @@ Object.extend(Ajax.InPlaceEditor, {
     clickToEditText: 'Click to edit',
     externalControl: null,                      // id|elt
     externalControlOnly: false,
-    fieldPostCreation: 'activate',              // 'activate'|'focus'|false
+    fieldAnswerCreation: 'activate',              // 'activate'|'focus'|false
     formClassName: 'inplaceeditor-form',
     formId: null,                               // id|elt
     highlightColor: '#ffff99',

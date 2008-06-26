@@ -30,9 +30,9 @@
 </h1>
 
 <p class="subtitle">
-  <%= feed_icon_tag @category.name, formatted_category_posts_path(@category, :rss) %> 
+  <%= feed_icon_tag @category.name, formatted_category_answers_path(@category, :rss) %> 
   <%= '{count} question(s)'[(count=@category.questions.size)==1 ? :question_count : :questions_count, number_with_delimiter(count)] %>, 
-  <%= '{count} post(s)'[(count=@category.posts.size)==1 ? :post_count : :posts_count, number_with_delimiter(count)] %>
+  <%= '{count} answer(s)'[(count=@category.answers.size)==1 ? :answer_count : :answers_count, number_with_delimiter(count)] %>
 </p>
 
 <% if @questions.total_pages > 1 -%>
@@ -45,9 +45,9 @@
 <table border="0" cellspacing="0" cellpadding="0" class="wide questions">
 <tr>
   <th class="la" colspan="2"><%= 'Question'[:question_title] %></th>
-  <th width="1%"><%= 'Posts'[:posts_title] %></th>
+  <th width="1%"><%= 'Answers'[:answers_title] %></th>
   <th width="1%"><%= 'Views'[:views_title] %></th>
-  <th class="la"><%= 'Last post'[:last_post] %></th>
+  <th class="la"><%= 'Last answer'[:last_answer] %></th>
 </tr>
 <% for question in @questions %>
 <tr class="hentry">
@@ -57,14 +57,14 @@
     color = ""
     if question.locked?
       icon = "lock"
-      post = ", this question is locked."[:comma_locked_question]
+      answer = ", this question is locked."[:comma_locked_question]
       color = "darkgrey"
     end
     %>
     <% if recent_question_activity(question) %>
-    <%= image_tag "clearbits/#{icon}.gif", :class => "icon green", :title => "Recent activity"[]+"#{post}" %>
+    <%= image_tag "clearbits/#{icon}.gif", :class => "icon green", :title => "Recent activity"[]+"#{answer}" %>
     <% else %>
-      <%= image_tag "clearbits/#{icon}.gif", :class => "icon grey #{color}", :title => "No recent activity"[]+"#{post}" %>
+      <%= image_tag "clearbits/#{icon}.gif", :class => "icon grey #{color}", :title => "No recent activity"[]+"#{answer}" %>
     <% end %>
   </td>
   <td class="c2">
@@ -76,12 +76,12 @@
     <small><%= link_to 'last'[], question_path(:category_id => @category, :id => question, :page => question.last_page) %></small>
     <% end -%>
   </td>
-  <td class="ca inv stat"><%= question.posts.size %></td>
+  <td class="ca inv stat"><%= question.answers.size %></td>
   <td class="ca inv stat"><%= number_with_delimiter(question.views) %></td>
   <td class="lp">
     <abbr class="updated" title="<%= question.replied_at.xmlschema %>"><%= time_ago_in_words(question.replied_at) %></abbr>
     <%= 'by {user}'[:by_user, "<span class=\"author\"><strong class=\"fn\">#{h(question.replied_by_user.display_name)}</strong></span>"] %>
-    <span><%= link_to 'view'[], question_path(:category_id => @category, :id => question, :page => question.last_page, :anchor => "posts-#{question.last_post_id}") %></span>
+    <span><%= link_to 'view'[], question_path(:category_id => @category, :id => question, :page => question.last_page, :anchor => "answers-#{question.last_answer_id}") %></span>
   </td>
 </tr>
 <% end %>

@@ -1,11 +1,11 @@
 class DeleteEmptyQuestions < ActiveRecord::Migration
-  class Post < ActiveRecord::Base; end
+  class Answer < ActiveRecord::Base; end
   class Question < ActiveRecord::Base
-    has_many :posts
+    has_many :answers
   end
   def self.up
     Question.find(:all).each do |question| 
-      question.destroy if question.posts.count.zero?
+      question.destroy if question.answers.count.zero?
     end
   end
 

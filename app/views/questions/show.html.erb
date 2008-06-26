@@ -60,74 +60,74 @@
 
 <p class="subtitle">
   <%= feed_icon_tag @question.title, formatted_question_path(@category, @question, :rss) %>
-  <%= '{count} post(s)'[(count=@question.posts.size)==1 ? :post_count : :posts_count, number_with_delimiter(count)] %>, 
+  <%= '{count} answer(s)'[(count=@question.answers.size)==1 ? :answer_count : :answers_count, number_with_delimiter(count)] %>, 
   <%= '{count} voice(s)'[(count=@question.voices.size)==1 ? :voice_count : :voices_count, number_with_delimiter(count)] %>
 </p>
 
-<%= pagination @posts %>
+<%= pagination @answers %>
 
-<a name="<%= dom_id @posts.first %>" id="<%= dom_id @posts.first %>">&nbsp;</a>
+<a name="<%= dom_id @answers.first %>" id="<%= dom_id @answers.first %>">&nbsp;</a>
 
-<table border="0" cellspacing="0" cellpadding="0" class="posts wide">
-<% for post in @posts do %>
-<% unless post == @posts.first %>
+<table border="0" cellspacing="0" cellpadding="0" class="answers wide">
+<% for answer in @answers do %>
+<% unless answer == @answers.first %>
 <tr class="spacer">
   <td colspan="2">
-    <a name="<%= dom_id post %>" id="<%= dom_id post %>">&nbsp;</a>
+    <a name="<%= dom_id answer %>" id="<%= dom_id answer %>">&nbsp;</a>
   </td>
 </tr>
 <% end %>
-<tr class="post hentry" id="<%= dom_id post %>-row">
+<tr class="answer hentry" id="<%= dom_id answer %>-row">
   <td class="author vcard">
     <div class="date">
-      <a href="#<%= dom_id post %>" rel="bookmark">
-      <abbr class="updated" title="<%= post.created_at.xmlschema %>">
-      <%= time_ago_in_words(post.created_at) %>
+      <a href="#<%= dom_id answer %>" rel="bookmark">
+      <abbr class="updated" title="<%= answer.created_at.xmlschema %>">
+      <%= time_ago_in_words(answer.created_at) %>
       </abbr>
       </a>
     </div>
 
-    <%= avatar_for post.user %>
-    <span class="fn"><%= link_to truncate(h(post.user.display_name), 15), user_path(post.user), :class => (post.user == @posts.first.user ? "threadauthor" : nil) %></span>
-    <% if post.user.admin? or post.category.moderators.include?(post.user) %>
+    <%= avatar_for answer.user %>
+    <span class="fn"><%= link_to truncate(h(answer.user.display_name), 15), user_path(answer.user), :class => (answer.user == @answers.first.user ? "threadauthor" : nil) %></span>
+    <% if answer.user.admin? or answer.category.moderators.include?(answer.user) %>
     <span class="admin">
-      <% if post.user.admin? %>
+      <% if answer.user.admin? %>
       <%= 'Administator'[:administrator_title] %>
-      <% elsif post.category.moderators.include?(post.user) %>
+      <% elsif answer.category.moderators.include?(answer.user) %>
       <%= 'Moderator'[:moderator_title] %>
       <% end %>
     </span>
     <% end %>
-    <span class="posts"><%= '{count} post(s)'[(count=post.user.posts.size)==1 ? :post_count : :posts_count, number_with_delimiter(count)] %></span>
+    <span class="answers"><%= '{count} answer(s)'[(count=answer.user.answers.size)==1 ? :answer_count : :answers_count, number_with_delimiter(count)] %></span>
 
 
-    <% if logged_in? && post.editable_by?(current_user) -%>
+    <% if logged_in? && answer.editable_by?(current_user) -%>
     <p>
       <span class="edit">
-        <%= ajax_spinner_for "edit-post-#{post.id}", "spinner_bounce.gif" %>
-        <%= link_to_remote('Edit post'[], 
-              {:url => edit_post_path(:category_id => @category, :question_id => @question, :id => post), :method => :get,
-               :before => "EditForm.init(#{post.id});", :condition => "!EditForm.isEditing(#{post.id})" }, 
-              {:href => edit_post_path(:category_id => @category, :question_id => @question, :id => post, :page => params[:page]), :class => "utility"}) %>
+        <%= ajax_spinner_for "edit-answer-#{answer.id}", "spinner_bounce.gif" %>
+        <%= link_to_remote('Edit answer'[], 
+              {:url => edit_answer_path(:category_id => @category, :question_id => @question, :id => answer), :method => :get,
+               :before => "EditForm.init(#{answer.id});", :condition => "!EditForm.isEditing(#{answer.id})" }, 
+              {:href => edit_answer_path(:category_id => @category, :question_id => @question, :id => answer, :page => params[:page]), :class => "utility"}) %>
       </span>
     </p>
     <% end -%>
 
 
   </td>
-  <td class="body entry-content" id="post-body-<%= post.id %>">
+  <td class="body entry-content" id="answer-body-<%= answer.id %>">
 <!--
     <%= link_to_function image_tag('clearbits/comment.gif', :class => 'icon reply'), "$('reply').toggle()" if logged_in? %>
 -->
-    <%= post.body_html %>
+    <%= answer.body_html %>
   </td>
 </tr>
 
 <% end %>
 </table>
        
-<%= next_page @posts %>
-<%= pagination @posts %>
+<%= next_page @answers %>
+<%= pagination @answers %>
 
 <% if logged_in? %>
 <div id="edit"></div>
@@ -144,7 +144,7 @@
 <div id="reply" class="editbox">
 <div class="container">
   <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
-  <% form_for :post, :url => posts_path(:category_id => @category, :question_id => @question, :page => @question.last_page) do |f| -%>
+  <% form_for :answer, :url => answers_path(:category_id => @category, :question_id => @question, :page => @question.last_page) do |f| -%>
   <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <td rowspan="2" width="70%">

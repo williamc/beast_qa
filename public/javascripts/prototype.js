@@ -1156,7 +1156,7 @@ Ajax.Responders.register({
 Ajax.Base = Class.create({
   initialize: function(options) {
     this.options = {
-      method:       'post',
+      method:       'answer',
       asynchronous: true,
       contentType:  'application/x-www-form-urlencoded',
       encoding:     'UTF-8',
@@ -1189,10 +1189,10 @@ Ajax.Request = Class.create(Ajax.Base, {
     this.method = this.options.method;
     var params = Object.clone(this.options.parameters);
 
-    if (!['get', 'post'].include(this.method)) {
-      // simulate other verbs over post
+    if (!['get', 'answer'].include(this.method)) {
+      // simulate other verbs over answer
       params['_method'] = this.method;
-      this.method = 'post';
+      this.method = 'answer';
     }
 
     this.parameters = params;
@@ -1218,7 +1218,7 @@ Ajax.Request = Class.create(Ajax.Base, {
       this.transport.onreadystatechange = this.onStateChange.bind(this);
       this.setRequestHeaders();
 
-      this.body = this.method == 'post' ? (this.options.postBody || params) : null;
+      this.body = this.method == 'answer' ? (this.options.answerBody || params) : null;
       this.transport.send(this.body);
 
       /* Force Firefox to handle ready state 4 for synchronous requests */
@@ -1244,7 +1244,7 @@ Ajax.Request = Class.create(Ajax.Base, {
       'Accept': 'text/javascript, text/html, application/xml, text/xml, */*'
     };
 
-    if (this.method == 'post') {
+    if (this.method == 'answer') {
       headers['Content-type'] = this.options.contentType +
         (this.options.encoding ? '; charset=' + this.options.encoding : '');
 

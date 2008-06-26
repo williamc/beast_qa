@@ -3,7 +3,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.column :title, :string
   end
 
-  create_table :posts, :force => true do |t|
+  create_table :answers, :force => true do |t|
     t.column :question_id, :integer
     t.column :question_type, :string
     t.column :type, :string

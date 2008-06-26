@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
 
   caches_formatted_page :rss, :show
-  cache_sweeper :posts_sweeper, :only => [:create, :update, :destroy]
+  cache_sweeper :answers_sweeper, :only => [:create, :update, :destroy]
 
   def index
     respond_to do |format|
@@ -28,32 +28,32 @@ class QuestionsController < ApplicationController
         (session[:questions] ||= {})[@question.id] = Time.now.utc if logged_in?
         # authors of questions don't get counted towards total hits
         @question.hit! unless logged_in? and @question.user == current_user
-        @posts = @question.posts.paginate :page => params[:page]
-        User.find(:all, :conditions => ['id IN (?)', @posts.collect { |p| p.user_id }.uniq]) unless @posts.blank?
-        @post   = Post.new
+        @answers = @question.answers.paginate :page => params[:page]
+        User.find(:all, :conditions => ['id IN (?)', @answers.collect { |p| p.user_id }.uniq]) unless @answers.blank?
+        @answer   = Answer.new
       end
       format.xml do
         render :xml => @question.to_xml
       end
       format.rss do
-        @posts = @question.posts.find(:all, :order => 'created_at desc', :limit => 25)
+        @answers = @question.answers.find(:all, :order => 'created_at desc', :limit => 25)
         render :action => 'show', :layout => false
       end
     end
   end
   
   def create
-    # this is icky - move the question/first post workings into the question model?
+    # this is icky - move the question/first answer workings into the question model?
     Question.transaction do
       @question  = @category.questions.build(params[:question])
       assign_protected
-      @post       = @question.posts.build(params[:question])
-      @post.question = @question
-      @post.user  = current_user
-      # only save question if post is valid so in the view question will be a new record if there was an error
-      @question.body = @post.body # incase save fails and we go back to the form
-      @question.save! if @post.valid?
-      @post.save! 
+      @answer       = @question.answers.build(params[:question])
+      @answer.question = @question
+      @answer.user  = current_user
+      # only save question if answer is valid so in the view question will be a new record if there was an error
+      @question.body = @answer.body # incase save fails and we go back to the form
+      @question.save! if @answer.valid?
+      @answer.save! 
     end
     respond_to do |format|
       format.html { redirect_to question_path(@category, @question) }

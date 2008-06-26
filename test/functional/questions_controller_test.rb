@@ -84,47 +84,47 @@ class QuestionsControllerTest < Test::Unit::TestCase
   uses_transaction :test_should_not_create_question_without_body
 
   def test_should_not_create_question_without_body
-    counts = lambda { [Question.count, Post.count] }
+    counts = lambda { [Question.count, Answer.count] }
     old = counts.call
     
     login_as :aaron
     
     post :create, :category_id => categories(:rails).id, :question => { :title => 'blah' }
     assert assigns(:question)
-    assert assigns(:post)
+    assert assigns(:answer)
     # both of these should be new records if the save fails so that the view can
     # render accordingly
     assert assigns(:question).new_record?
-    assert assigns(:post).new_record?
+    assert assigns(:answer).new_record?
     
     assert_equal old, counts.call
   end
   
   def test_should_not_create_question_without_title
-    counts = lambda { [Question.count, Post.count] }
+    counts = lambda { [Question.count, Answer.count] }
     old = counts.call
     
     login_as :aaron
     
     post :create, :category_id => categories(:rails).id, :question => { :body => 'blah' }
     assert_equal "blah", assigns(:question).body
-    assert assigns(:post)
+    assert assigns(:answer)
     # both of these should be new records if the save fails so that the view can
     # render accordingly
     assert assigns(:question).new_record?
-    assert assigns(:post).new_record?
+    assert assigns(:answer).new_record?
     
     assert_equal old, counts.call
   end
 
   def test_should_create_question
-    counts = lambda { [Question.count, Post.count, categories(:rails).questions_count, categories(:rails).posts_count,  users(:aaron).posts_count] }
+    counts = lambda { [Question.count, Answer.count, categories(:rails).questions_count, categories(:rails).answers_count,  users(:aaron).answers_count] }
     old = counts.call
     
     login_as :aaron
     post :create, :category_id => categories(:rails).id, :question => { :title => 'blah', :body => 'foo' }
     assert assigns(:question)
-    assert assigns(:post)
+    assert assigns(:answer)
     assert_redirected_to question_path(categories(:rails), assigns(:question))
     [categories(:rails), users(:aaron)].each &:reload
   
@@ -140,7 +140,7 @@ class QuestionsControllerTest < Test::Unit::TestCase
   end
 
   def test_should_delete_question
-    counts = lambda { [Post.count, categories(:rails).questions_count, categories(:rails).posts_count] }
+    counts = lambda { [Answer.count, categories(:rails).questions_count, categories(:rails).answers_count] }
     old = counts.call
     
     login_as :aaron
@@ -200,14 +200,14 @@ class QuestionsControllerTest < Test::Unit::TestCase
     get :show, :category_id => categories(:rails).id, :id => questions(:pdi).id
     assert_response :success
     assert_equal questions(:pdi), assigns(:question)
-    assert_models_equal [posts(:pdi), posts(:pdi_reply), posts(:pdi_rebuttal)], assigns(:posts)
+    assert_models_equal [answers(:pdi), answers(:pdi_reply), answers(:pdi_rebuttal)], assigns(:answers)
   end
 
-  def test_should_show_other_post
+  def test_should_show_other_answer
     get :show, :category_id => categories(:rails).id, :id => questions(:ponies).id
     assert_response :success
     assert_equal questions(:ponies), assigns(:question)
-    assert_models_equal [posts(:ponies)], assigns(:posts)
+    assert_models_equal [answers(:ponies)], assigns(:answers)
   end
 
   def test_should_get_edit
@@ -216,7 +216,7 @@ class QuestionsControllerTest < Test::Unit::TestCase
     assert_response :success
   end
   
-  def test_should_update_own_post
+  def test_should_update_own_answer
     login_as :sam
     put :update, :category_id => categories(:rails).id, :id => questions(:ponies).id, :question => { }
     assert_redirected_to question_path(categories(:rails), assigns(:question))
@@ -229,33 +229,33 @@ class QuestionsControllerTest < Test::Unit::TestCase
     assert_response :success
   end
 
-  def test_should_not_update_user_id_of_own_post
+  def test_should_not_update_user_id_of_own_answer
     login_as :sam
     put :update, :category_id => categories(:rails).id, :id => questions(:ponies).id, :question => { :user_id => 32 }
     assert_redirected_to question_path(categories(:rails), assigns(:question))
-    assert_equal users(:sam).id, posts(:ponies).reload.user_id
+    assert_equal users(:sam).id, answers(:ponies).reload.user_id
   end
 
-  def test_should_not_update_other_post
+  def test_should_not_update_other_answer
     login_as :sam
     put :update, :category_id => categories(:comics).id, :id => questions(:galactus).id, :question => { }
     assert_redirected_to login_path
   end
 
-  def test_should_not_update_other_post_with_xml
+  def test_should_not_update_other_answer_with_xml
     content_type 'application/xml'
     authorize_as :sam
     put :update, :category_id => categories(:comics).id, :id => questions(:galactus).id, :question => { }, :format => 'xml'
     assert_response :unauthorized
   end
 
-  def test_should_update_other_post_as_moderator
+  def test_should_update_other_answer_as_moderator
     login_as :sam
     put :update, :category_id => categories(:rails).id, :id => questions(:pdi).id, :question => { }
     assert_redirected_to question_path(categories(:rails), assigns(:question))
   end
 
-  def test_should_update_other_post_as_admin
+  def test_should_update_other_answer_as_admin
     login_as :aaron
     put :update, :category_id => categories(:rails).id, :id => questions(:ponies), :question => { }
     assert_redirected_to question_path(categories(:rails), assigns(:question))

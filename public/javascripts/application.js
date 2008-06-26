@@ -21,39 +21,39 @@ var LoginForm = {
 
 var EditForm = {
   // show the form
-  init: function(postId) {
-    $('edit-post-' + postId + '_spinner').show();
+  init: function(answerId) {
+    $('edit-answer-' + answerId + '_spinner').show();
     this.clearReplyId();
   },
 
-  // sets the current post id we're editing
-  setReplyId: function(postId) {
-    $('edit').setAttribute('post_id', postId.toString());
-    $('post_' + postId + '-row').addClassName('editing');
+  // sets the current answer id we're editing
+  setReplyId: function(answerId) {
+    $('edit').setAttribute('answer_id', answerId.toString());
+    $('answer_' + answerId + '-row').addClassName('editing');
     if($('reply')) $('reply').hide();
   },
   
-  // clears the current post id
+  // clears the current answer id
   clearReplyId: function() {
     var currentId = this.currentReplyId()
     if(!currentId || currentId == '') return;
 
-    var row = $('post_' + currentId + '-row');
+    var row = $('answer_' + currentId + '-row');
     if(row) row.removeClassName('editing');
-    $('edit').setAttribute('post_id', '');
+    $('edit').setAttribute('answer_id', '');
   },
   
-  // gets the current post id we're editing
+  // gets the current answer id we're editing
   currentReplyId: function() {
-    return $('edit').getAttribute('post_id');
+    return $('edit').getAttribute('answer_id');
   },
   
-  // checks whether we're editing this post already
-  isEditing: function(postId) {
-    if (this.currentReplyId() == postId.toString())
+  // checks whether we're editing this answer already
+  isEditing: function(answerId) {
+    if (this.currentReplyId() == answerId.toString())
     {
       $('edit').show();
-      $('edit_post_body').focus();
+      $('edit_answer_body').focus();
       return true;
     }
     return false;
@@ -71,9 +71,9 @@ var ReplyForm = {
   init: function() {
     EditForm.cancel();
     $('reply').toggle();
-    $('post_body').focus();
+    $('answer_body').focus();
     // for Safari which is sometime weird
-//    setTimeout('$(\"post_body\").focus();',50);
+//    setTimeout('$(\"answer_body\").focus();',50);
   }
 }
 

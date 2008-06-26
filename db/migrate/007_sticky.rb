@@ -1,9 +1,9 @@
 class Sticky < ActiveRecord::Migration
   def self.up
-    add_column "posts", "sticky", :boolean, :default => false
+    add_column "answers", "sticky", :boolean, :default => false
   end
 
   def self.down
-    remove_column "posts", "sticky"
+    remove_column "answers", "sticky"
   end
 end

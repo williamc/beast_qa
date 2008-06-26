@@ -1,0 +1,6 @@
+page.replace :edit, :partial => "edit"
+page.edit_form.set_reply_id @answer.id
+page["edit-answer-#{@answer.id}_spinner"].hide
+page.delay(0.25) do
+  page[:edit_answer_body].focus
+end

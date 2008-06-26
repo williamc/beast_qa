@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :moderatorships, :dependent => :destroy
   has_many :categories, :through => :moderatorships, :order => "#{Category.table_name}.name"
 
-  has_many :posts
+  has_many :answers
   has_many :questions
   has_many :monitorships
   has_many :monitored_questions, :through => :monitorships, :conditions => ["#{Monitorship.table_name}.active = ?", true], :order => "#{Question.table_name}.replied_at desc", :source => :question
@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   format_attribute :bio
 
   attr_reader :password
-  attr_protected :admin, :posts_count, :login, :created_at, :updated_at, :last_login_at, :questions_count, :activated
+  attr_protected :admin, :answers_count, :login, :created_at, :updated_at, :last_login_at, :questions_count, :activated
 
   def self.currently_online
     User.find(:all, :conditions => ["last_seen_at > ?", Time.now.utc-5.minutes])
@@ -103,11 +103,11 @@ class User < ActiveRecord::Base
     openid_url.nil?
   end
   
-  def update_posts_count
-    self.class.update_posts_count id
+  def update_answers_count
+    self.class.update_answers_count id
   end
   
-  def self.update_posts_count(id)
-    User.update_all ['posts_count = ?', Post.count(:id, :conditions => {:user_id => id})],   ['id = ?', id]
+  def self.update_answers_count(id)
+    User.update_all ['answers_count = ?', Answer.count(:id, :conditions => {:user_id => id})],   ['id = ?', id]
   end
 end

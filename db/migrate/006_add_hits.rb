@@ -1,9 +1,9 @@
 class AddHits < ActiveRecord::Migration
   def self.up
-    add_column "posts", "hits", :integer, :default => 0 
+    add_column "answers", "hits", :integer, :default => 0 
   end
 
   def self.down
-    remove_column "posts", "hits"
+    remove_column "answers", "hits"
   end
 end
